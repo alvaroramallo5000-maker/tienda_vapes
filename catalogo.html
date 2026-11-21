@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEONVAPE // Contacto & Soporte</title>
+  <!-- Google Fonts: Syne & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --nv-bg: #05030d;
+      --nv-cyan: #00f5d4;
+      --nv-magenta: #ff00a8;
+      --nv-violet: #7b2cbf;
+      --nv-glass: rgba(16, 11, 34, 0.72);
+      --nv-border: rgba(255, 255, 255, 0.12);
+    }
+
+    body {
+      background-color: var(--nv-bg);
+      color: #f4f4ff;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+      padding-bottom: 5.5rem;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding-bottom: 2rem;
+      }
+    }
+
+    h1, h2, h3, .font-display {
+      font-family: 'Syne', sans-serif;
+    }
+
+    /* Fondo abstracto futurista */
+    .cyber-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(0, 245, 212, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 0, 168, 0.045) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 9999px;
+      filter: blur(100px);
+      opacity: 0.42;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatOrb 15s ease-in-out infinite alternate;
+    }
+    .orb-1 {
+      width: 440px;
+      height: 440px;
+      top: -120px;
+      right: -100px;
+      background: radial-gradient(circle, var(--nv-magenta), transparent 70%);
+    }
+    .orb-2 {
+      width: 460px;
+      height: 460px;
+      bottom: -140px;
+      left: -80px;
+      background: radial-gradient(circle, var(--nv-cyan), transparent 70%);
+      animation-delay: -5s;
+    }
+    .orb-3 {
+      width: 340px;
+      height: 340px;
+      top: 42%;
+      left: 42%;
+      background: radial-gradient(circle, var(--nv-violet), transparent 70%);
+      animation-delay: -9s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(35px, -30px) scale(1.1); }
+    }
+
+    .glass-panel {
+      background: var(--nv-glass);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--nv-border);
+    }
+
+    .neon-text {
+      background: linear-gradient(90deg, #00f5d4, #a855f7, #ff00a8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .btn-neon {
+      background: linear-gradient(135deg, #00f5d4 0%, #7b2cbf 55%, #ff00a8 100%);
+      border: none;
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease;
+    }
+    .btn-neon:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(0, 245, 212, 0.45), 0 0 36px rgba(255, 0, 168, 0.3);
+      filter: brightness(1.08);
+      color: #ffffff;
+    }
+
+    /* Rail Lateral Izquierdo */
+    .left-rail {
+      background: rgba(10, 6, 24, 0.85);
+      backdrop-filter: blur(22px);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .rail-item {
+      width: 56px;
+      height: 56px;
+      border-radius: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      color: #94a3b8;
+      border: 1px solid transparent;
+      transition: all 0.22s ease;
+      text-decoration: none;
+      background: transparent;
+    }
+    .rail-item:hover, .rail-item.active {
+      color: #00f5d4;
+      background: rgba(0, 245, 212, 0.12);
+      border-color: rgba(0, 245, 212, 0.4);
+      box-shadow: 0 0 18px rgba(0, 245, 212, 0.2);
+    }
+
+    /* Mobile Dock */
+    .mobile-dock {
+      background: rgba(10, 6, 24, 0.9);
+      backdrop-filter: blur(22px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.55);
+    }
+
+    /* Inputs Cyber */
+    .form-control-cyber, .form-select-cyber {
+      background-color: rgba(10, 7, 24, 0.9) !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      color: #f8fafc !important;
+      border-radius: 0.9rem !important;
+    }
+    .form-control-cyber:focus, .form-select-cyber:focus {
+      border-color: var(--nv-cyan) !important;
+      box-shadow: 0 0 0 0.2rem rgba(0, 245, 212, 0.2) !important;
+    }
+    .form-control-cyber::placeholder {
+      color: #64748b;
+    }
+
+    /* Tarjetas de canal */
+    .channel-card {
+      background: rgba(18, 12, 38, 0.78);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: 1.5rem;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .channel-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 245, 212, 0.5);
+      box-shadow: 0 12px 28px -8px rgba(0, 245, 212, 0.2);
+    }
+
+    /* Accordion Dark */
+    .accordion-cyber .accordion-item {
+      background: rgba(16, 11, 34, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 1rem !important;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+    .accordion-cyber .accordion-button {
+      background: transparent;
+      color: #f4f4ff;
+      font-weight: 600;
+      box-shadow: none;
+    }
+    .accordion-cyber .accordion-button:not(.collapsed) {
+      color: #00f5d4;
+      background: rgba(0, 245, 212, 0.08);
+    }
+    .accordion-cyber .accordion-button::after {
+      filter: invert(1);
+    }
+    .accordion-cyber .accordion-body {
+      color: #cbd5e1;
+      font-size: 0.92rem;
+    }
+
+    .modal-cyber .modal-content {
+      background: rgba(12, 8, 28, 0.95);
+      backdrop-filter: blur(22px);
+      color: #f4f4ff;
+      border: 1px solid rgba(0, 245, 212, 0.25);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Capas Abstractas de Fondo -->
+  <div class="cyber-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- ==================== RAIL LATERAL IZQUIERDO (ESCRITORIO) ==================== -->
+  <aside class="left-rail hidden md:flex fixed top-0 left-0 bottom-0 w-20 z-40 flex-col items-center justify-between py-6">
+    <!-- Logo -->
+    <a href="index.html" class="flex flex-col items-center gap-1 no-underline group" title="NEONVAPE Cloud Lab">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-400 via-fuchsia-500 to-violet-600 flex items-center justify-center text-slate-950 shadow-lg shadow-cyan-500/30 group-hover:scale-105 transition">
+        <i class="bi bi-stars text-2xl"></i>
+      </div>
+      <span class="text-[9px] font-display font-extrabold tracking-[0.2em] neon-text">NEON</span>
+    </a>
+
+    <!-- Navegación Principal -->
+    <nav class="flex flex-col items-center gap-3">
+      <a href="index.html" class="rail-item" title="Explorar catálogo">
+        <i class="bi bi-compass-fill text-xl"></i>
+        <span class="text-[10px] font-semibold tracking-wide">Explorar</span>
+      </a>
+
+      <a href="index.html#bento-hero" class="rail-item" title="Producto destacado">
+        <i class="bi bi-lightning-charge-fill text-xl"></i>
+        <span class="text-[10px] font-semibold tracking-wide">Top Drop</span>
+      </a>
+
+      <a href="contacto.html" class="rail-item active" title="Contacto y Soporte">
+        <i class="bi bi-chat-dots-fill text-xl"></i>
+        <span class="text-[10px] font-semibold tracking-wide">Contacto</span>
+      </a>
+    </nav>
+
+    <!-- Acceso Admin -->
+    <div class="flex flex-col items-center gap-2">
+      <a href="admin.html" class="rail-item text-fuchsia-300/80 hover:text-fuchsia-200" title="Panel de Administración">
+        <i class="bi bi-cpu-fill text-xl"></i>
+        <span class="text-[10px] font-semibold tracking-wide">Admin</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ==================== DOCK FLOTANTE INFERIOR (MÓVIL) ==================== -->
+  <nav class="mobile-dock md:hidden fixed bottom-3 left-3 right-3 rounded-2xl z-40 px-3 py-2 flex items-center justify-around">
+    <a href="index.html" class="flex flex-col items-center gap-0.5 text-slate-300 hover:text-white no-underline text-xs font-semibold px-3 py-1">
+      <i class="bi bi-compass-fill text-lg"></i>
+      <span class="text-[10px]">Explorar</span>
+    </a>
+    <a href="contacto.html" class="flex flex-col items-center gap-0.5 text-cyan-300 no-underline text-xs font-semibold px-3 py-1">
+      <i class="bi bi-chat-dots-fill text-lg"></i>
+      <span class="text-[10px]">Contacto</span>
+    </a>
+    <a href="admin.html" class="flex flex-col items-center gap-0.5 text-slate-300 hover:text-fuchsia-300 no-underline text-xs font-semibold px-3 py-1">
+      <i class="bi bi-cpu-fill text-lg"></i>
+      <span class="text-[10px]">Admin</span>
+    </a>
+  </nav>
+
+  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+  <main class="relative z-10 md:pl-28 pr-4 pl-4 md:pr-8 pt-6 md:pt-8 max-w-[1440px] mx-auto w-full flex-grow">
+
+    <!-- Header Hero Abstracto -->
+    <section class="glass-panel rounded-3xl p-6 md:p-10 mb-8 relative overflow-hidden">
+      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+        <div>
+          <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300 bg-cyan-400/10 border border-cyan-400/30 px-3.5 py-1 rounded-full mb-3">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            // CANAL DIRECTO 24/7
+          </span>
+          <h1 class="text-3xl sm:text-5xl font-extrabold font-display tracking-tight mb-2">
+            Conecta con <span class="neon-text">NEONVAPE</span>
+          </h1>
+          <p class="text-slate-300 max-w-2xl m-0">
+            ¿Dudas sobre resistencias, envíos express, garantías o pedidos mayoristas? Escríbenos directo a nuestro Cloud Lab.
+          </p>
+        </div>
+
+        <a href="index.html" class="btn btn-neon rounded-full px-5 py-2.5 text-sm inline-flex items-center gap-2 no-underline shrink-0">
+          <i class="bi bi-arrow-left"></i> Volver al Catálogo
+        </a>
+      </div>
+    </section>
+
+    <!-- Bento Grid de Contacto -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10">
+
+      <!-- Columna Izquierda (5 cols): Canales Directos + Info -->
+      <div class="lg:col-span-5 space-y-4">
+
+        <div class="channel-card p-5 flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-400/15 border border-cyan-400/30 flex items-center justify-center text-cyan-300 shrink-0">
+            <i class="bi bi-whatsapp text-2xl"></i>
+          </div>
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-cyan-300 mb-1">WhatsApp Express</p>
+            <h3 class="text-lg font-bold text-white mb-1">+591 700 12345</h3>
+            <p class="text-xs text-slate-400 m-0">Atención inmediata para pedidos, stock en vivo y entregas el mismo día.</p>
+          </div>
+        </div>
+
+        <div class="channel-card p-5 flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-fuchsia-500/15 border border-fuchsia-400/30 flex items-center justify-center text-fuchsia-300 shrink-0">
+            <i class="bi bi-envelope-paper-fill text-2xl"></i>
+          </div>
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-fuchsia-300 mb-1">Correo Electrónico</p>
+            <h3 class="text-lg font-bold text-white mb-1">soporte@neonvape.lab</h3>
+            <p class="text-xs text-slate-400 m-0">Consultas de garantía, soporte técnico y alianzas comerciales.</p>
+          </div>
+        </div>
+
+        <div class="channel-card p-5 flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-400/30 flex items-center justify-center text-purple-300 shrink-0">
+            <i class="bi bi-geo-alt-fill text-2xl"></i>
+          </div>
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-purple-300 mb-1">Showroom Cloud Lab</p>
+            <h3 class="text-lg font-bold text-white mb-1">Av. América #450, Local 4</h3>
+            <p class="text-xs text-slate-400 m-0">Lun - Sáb: 10:00 a 21:00 · Dom: 12:00 a 19:00</p>
+          </div>
+        </div>
+
+        <!-- FAQ Rápido -->
+        <div class="glass-panel rounded-3xl p-5">
+          <h3 class="text-base font-bold font-display text-white mb-3 flex items-center gap-2">
+            <i class="bi bi-patch-question-fill text-cyan-300"></i> Preguntas Frecuentes
+          </h3>
+          <div class="accordion accordion-cyber" id="faqNeonVape">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed py-2.5 text-sm" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                  ¿Cuánto tarda el envío?
+                </button>
+              </h2>
+              <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqNeonVape">
+                <div class="accordion-body pt-0">
+                  En ciudad entregamos en menos de 2 horas con nuestro servicio Express. A nivel nacional toma de 24 a 48 horas.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed py-2.5 text-sm" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                  ¿Los equipos tienen garantía?
+                </button>
+              </h2>
+              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqNeonVape">
+                <div class="accordion-body pt-0">
+                  Todos los Pods y Mods recargables cuentan con 30 días de garantía por defectos de fábrica presentando tu comprobante.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item mb-0">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed py-2.5 text-sm" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                  ¿Qué métodos de pago aceptan?
+                </button>
+              </h2>
+              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqNeonVape">
+                <div class="accordion-body pt-0">
+                  Aceptamos efectivo contra entrega, transferencia bancaria / QR y pagos con tarjeta.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Columna Derecha (7 cols): Formulario Futurista de Contacto -->
+      <div class="lg:col-span-7">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 h-full flex flex-col justify-between">
+          <div>
+            <div class="mb-6 border-b border-white/10 pb-4">
+              <span class="text-xs font-bold uppercase tracking-[0.2em] text-fuchsia-400">// MENSAJE DIRECTO</span>
+              <h2 class="text-2xl sm:text-3xl font-extrabold font-display text-white mt-1">
+                Envíanos una <span class="neon-text">Transmisión</span>
+              </h2>
+              <p class="text-sm text-slate-400 m-0">Completa el formulario y nuestro equipo te responderá en minutos.</p>
+            </div>
+
+            <form id="form-contacto" onsubmit="enviarMensaje(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="contacto-nombre" class="form-label text-xs font-semibold uppercase tracking-wider text-cyan-300">Nombre completo</label>
+                  <input type="text" id="contacto-nombre" class="form-control form-control-cyber py-2.5" placeholder="Ej: Mateo Vargas" required>
+                </div>
+                <div>
+                  <label for="contacto-medio" class="form-label text-xs font-semibold uppercase tracking-wider text-cyan-300">WhatsApp o Correo</label>
+                  <input type="text" id="contacto-medio" class="form-control form-control-cyber py-2.5" placeholder="Ej: 70012345 / correo@mail.com" required>
+                </div>
+              </div>
+
+              <div>
+                <label for="contacto-asunto" class="form-label text-xs font-semibold uppercase tracking-wider text-cyan-300">Motivo de contacto</label>
+                <select id="contacto-asunto" class="form-select form-select-cyber py-2.5" required>
+                  <option value="Consulta de producto o stock">Consulta de producto o stock</option>
+                  <option value="Seguimiento de pedido">Seguimiento de pedido</option>
+                  <option value="Garantía o soporte técnico">Garantía o soporte técnico</option>
+                  <option value="Compras al por mayor">Compras al por mayor</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="contacto-mensaje" class="form-label text-xs font-semibold uppercase tracking-wider text-cyan-300">Mensaje</label>
+                <textarea id="contacto-mensaje" rows="5" class="form-control form-control-cyber py-2.5" placeholder="Cuéntanos qué dispositivo buscas o en qué podemos ayudarte..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-neon w-full py-3 rounded-xl text-base flex items-center justify-center gap-2">
+                <i class="bi bi-send-fill"></i> Enviar Mensaje
+              </button>
+            </form>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+            <span><i class="bi bi-shield-check text-cyan-400 me-1"></i> Venta exclusiva para mayores de 18 años</span>
+            <div class="flex items-center gap-3 text-base">
+              <a href="#" class="text-slate-400 hover:text-cyan-300 transition" title="Instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="text-slate-400 hover:text-fuchsia-300 transition" title="TikTok"><i class="bi bi-tiktok"></i></a>
+              <a href="#" class="text-slate-400 hover:text-cyan-300 transition" title="Telegram"><i class="bi bi-telegram"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==================== MODAL CONFIRMACIÓN DE CONTACTO ==================== -->
+  <div class="modal fade modal-cyber" id="modalContactoExito" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-3xl overflow-hidden shadow-2xl">
+        <div class="modal-header border-b border-white/10" style="background: linear-gradient(135deg, rgba(0,245,212,0.22), rgba(255,0,168,0.22));">
+          <h5 class="modal-title font-display font-bold text-white">
+            <i class="bi bi-check2-circle text-cyan-300 me-2"></i> ¡Transmisión Recibida!
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div id="resumen-contacto" class="modal-body text-slate-200 space-y-2">
+          <!-- Dinámico -->
+        </div>
+        <div class="modal-footer border-t border-white/10">
+          <button type="button" class="btn btn-neon px-5 rounded-full" data-bs-dismiss="modal">Entendido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="glass-panel text-slate-400 text-center py-4 mt-8 text-xs tracking-widest uppercase relative z-10 md:pl-20 border-t border-white/10">
+    NEONVAPE CLOUD LAB · Soporte & Contacto · Solo mayores de edad
+  </footer>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    function esc(texto) {
+      return String(texto ?? '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[c]));
+    }
+
+    function enviarMensaje(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('contacto-nombre').value.trim();
+      const medio = document.getElementById('contacto-medio').value.trim();
+      const asunto = document.getElementById('contacto-asunto').value;
+      const mensaje = document.getElementById('contacto-mensaje').value.trim();
+
+      document.getElementById('resumen-contacto').innerHTML = `
+        <p class="m-0">Gracias <strong class="text-cyan-300">${esc(nombre)}</strong>, hemos recibido tu consulta.</p>
+        <div class="p-3 rounded-2xl bg-white/[0.04] border border-white/10 text-sm space-y-1 mt-2">
+          <p class="m-0"><strong class="text-fuchsia-300">Asunto:</strong> ${esc(asunto)}</p>
+          <p class="m-0"><strong class="text-fuchsia-300">Contacto:</strong> ${esc(medio)}</p>
+          <p class="m-0 text-slate-300"><strong>Mensaje:</strong> ${esc(mensaje)}</p>
+        </div>
+        <p class="text-xs text-slate-400 m-0 pt-1">Te responderemos muy pronto por el medio indicado.</p>
+      `;
+
+      document.getElementById('form-contacto').reset();
+      const modal = new bootstrap.Modal(document.getElementById('modalContactoExito'));
+      modal.show();
+    }
+  </script>
+</body>
+</html>
