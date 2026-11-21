@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEONVAPE // Command Center</title>
+
+  <!-- Google Fonts: Syne & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3.2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <style>
+    :root {
+      --nv-bg: #05030d;
+      --nv-surface: rgba(13, 9, 30, 0.72);
+      --nv-surface-strong: rgba(10, 7, 24, 0.92);
+      --nv-cyan: #00f5d4;
+      --nv-magenta: #ff00a8;
+      --nv-violet: #7b2cbf;
+      --nv-indigo: #4361ee;
+      --nv-border: rgba(255, 255, 255, 0.1);
+      --nv-border-glow: rgba(0, 245, 212, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--nv-bg);
+      color: #f4f4ff;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Syne', sans-serif;
+    }
+
+    /* ==================== ABSTRACT EUPHORIC BACKGROUND ==================== */
+    .cyber-mesh {
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(123, 44, 191, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(0, 245, 212, 0.12) 0%, transparent 45%),
+        linear-gradient(to right, rgba(0, 245, 212, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 0, 168, 0.035) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 56px 56px, 56px 56px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 9999px;
+      filter: blur(110px);
+      opacity: 0.38;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatOrb 16s ease-in-out infinite alternate;
+    }
+    .orb-1 {
+      width: 480px;
+      height: 480px;
+      top: -160px;
+      right: -120px;
+      background: radial-gradient(circle, var(--nv-cyan), transparent 70%);
+    }
+    .orb-2 {
+      width: 520px;
+      height: 520px;
+      bottom: -180px;
+      left: -140px;
+      background: radial-gradient(circle, var(--nv-magenta), transparent 70%);
+      animation-delay: -6s;
+    }
+    .orb-3 {
+      width: 360px;
+      height: 360px;
+      top: 40%;
+      left: 42%;
+      background: radial-gradient(circle, var(--nv-violet), transparent 70%);
+      opacity: 0.25;
+      animation-duration: 22s;
+      animation-delay: -11s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      100% { transform: translate(-36px, 28px) scale(1.12) rotate(12deg); }
+    }
+
+    @keyframes pulseAura {
+      0%, 100% { opacity: 0.55; transform: scale(1); }
+      50% { opacity: 0.9; transform: scale(1.06); }
+    }
+
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ==================== GLASSMORPHISM & NEON TOKENS ==================== */
+    .glass-panel {
+      background: var(--nv-surface);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid var(--nv-border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .glass-sidebar {
+      background: rgba(8, 5, 20, 0.86);
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      border-right: 1px solid rgba(255, 255, 255, 0.09);
+      box-shadow: 12px 0 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .neon-text {
+      background: linear-gradient(95deg, #00f5d4 0%, #a855f7 50%, #ff00a8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .btn-neon {
+      background: linear-gradient(135deg, #00f5d4 0%, #7b2cbf 52%, #ff00a8 100%);
+      border: none;
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease;
+    }
+    .btn-neon:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 26px rgba(0, 245, 212, 0.42), 0 0 38px rgba(255, 0, 168, 0.28);
+      filter: brightness(1.08);
+      color: #ffffff;
+    }
+    .btn-neon:active {
+      transform: translateY(0);
+    }
+
+    /* ==================== SIDEBAR NAVIGATION ==================== */
+    .nav-pill-cmd {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 1rem;
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #94a3b8;
+      background: transparent;
+      border: 1px solid transparent;
+      transition: all 0.22s ease;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-pill-cmd:hover {
+      color: #f8fafc;
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    .nav-pill-cmd.active {
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(0, 245, 212, 0.16), rgba(255, 0, 168, 0.14));
+      border-color: rgba(0, 245, 212, 0.42);
+      box-shadow: 0 0 24px rgba(0, 245, 212, 0.14);
+    }
+    .nav-pill-cmd.active i {
+      color: var(--nv-cyan);
+    }
+
+    /* ==================== FORM CONTROLS ==================== */
+    .form-control-cyber, .form-select-cyber {
+      background-color: rgba(8, 5, 20, 0.88) !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      color: #f8fafc !important;
+      border-radius: 0.9rem !important;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-control-cyber:focus, .form-select-cyber:focus {
+      border-color: var(--nv-cyan) !important;
+      box-shadow: 0 0 0 0.2rem rgba(0, 245, 212, 0.18) !important;
+    }
+    .form-control-cyber::placeholder {
+      color: #64748b;
+    }
+    .form-select-cyber option {
+      background-color: #0b071a;
+      color: #f8fafc;
+    }
+
+    /* ==================== KPI CARDS ==================== */
+    .kpi-card {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.22s ease, border-color 0.22s ease;
+    }
+    .kpi-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--kpi-accent, var(--nv-cyan)), transparent);
+      opacity: 0.85;
+    }
+
+    /* ==================== TABLE & ROWS ==================== */
+    .table-cyber {
+      --bs-table-bg: transparent;
+      --bs-table-color: #e2e8f0;
+      --bs-table-hover-bg: rgba(0, 245, 212, 0.055);
+      --bs-table-hover-color: #ffffff;
+      --bs-table-border-color: rgba(255, 255, 255, 0.07);
+    }
+    .table-cyber thead th {
+      background: rgba(255, 255, 255, 0.025);
+      padding: 0.95rem 1rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .table-cyber tbody td {
+      padding: 0.95rem 1rem;
+      vertical-align: middle;
+    }
+
+    /* ==================== OFFCANVAS DRAWER & MODALS ==================== */
+    .offcanvas-cyber {
+      background: rgba(9, 6, 22, 0.96) !important;
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      color: #f4f4ff !important;
+      border-left: 1px solid rgba(0, 245, 212, 0.28) !important;
+      width: 440px !important;
+      max-width: 100vw !important;
+    }
+    .modal-cyber .modal-content {
+      background: rgba(11, 7, 26, 0.96);
+      backdrop-filter: blur(24px);
+      color: #f4f4ff;
+      border: 1px solid rgba(0, 245, 212, 0.28);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+    }
+
+    /* ==================== LOGIN SPLIT ART ==================== */
+    .euphoric-art-bg {
+      background: radial-gradient(circle at 30% 35%, rgba(0, 245, 212, 0.22), transparent 52%),
+                  radial-gradient(circle at 75% 70%, rgba(255, 0, 168, 0.26), transparent 55%),
+                  linear-gradient(145deg, #070415 0%, #110829 50%, #05030d 100%);
+    }
+    .orbit-ring {
+      animation: spinSlow 28s linear infinite;
+    }
+    .orbit-ring-reverse {
+      animation: spinSlow 20s linear infinite reverse;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(5, 3, 13, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(168, 85, 247, 0.35);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 245, 212, 0.55);
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Capas Abstractas de Fondo -->
+  <div class="cyber-mesh"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-[1100] flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- ==================== VISTA 1: LOGIN SPLIT-SCREEN ==================== -->
+  <section id="vista-login" class="relative z-10 min-h-screen grid grid-cols-1 lg:grid-cols-12">
+
+    <!-- Mitad Izquierda: Arte Abstracto / Eufórico Neón -->
+    <div class="lg:col-span-7 euphoric-art-bg relative overflow-hidden flex flex-col justify-between p-8 sm:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-white/10 min-h-[340px] lg:min-h-screen">
+      <!-- Arte SVG Generativo Abstracto -->
+      <svg class="absolute inset-0 w-full h-full opacity-75 pointer-events-none" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="neonWave1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00f5d4" stop-opacity="0.85" />
+            <stop offset="50%" stop-color="#7b2cbf" stop-opacity="0.65" />
+            <stop offset="100%" stop-color="#ff00a8" stop-opacity="0.85" />
+          </linearGradient>
+          <linearGradient id="neonWave2" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ff00a8" stop-opacity="0.6" />
+            <stop offset="100%" stop-color="#00f5d4" stop-opacity="0.3" />
+          </linearGradient>
+          <filter id="glowBlur">
+            <feGaussianBlur stdDeviation="8" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Órbitas geométricas -->
+        <g transform="translate(400 400)">
+          <circle r="270" fill="none" stroke="url(#neonWave1)" stroke-width="1.2" stroke-dasharray="14 10" class="orbit-ring" />
+          <circle r="210" fill="none" stroke="url(#neonWave2)" stroke-width="1.5" stroke-dasharray="4 14" class="orbit-ring-reverse" />
+          <circle r="145" fill="none" stroke="rgba(0,245,212,0.35)" stroke-width="1" />
+          <polygon points="0,-195 169,97 -169,97" fill="none" stroke="url(#neonWave1)" stroke-width="1.2" opacity="0.55" class="orbit-ring" />
+          <polygon points="0,195 169,-97 -169,-97" fill="none" stroke="url(#neonWave2)" stroke-width="1" opacity="0.45" class="orbit-ring-reverse" />
+        </g>
+
+        <!-- Ondas fluidas abstractas -->
+        <path d="M-40,560 C160,420 310,690 520,490 C680,340 770,460 860,310" fill="none" stroke="url(#neonWave1)" stroke-width="3" filter="url(#glowBlur)" opacity="0.8" />
+        <path d="M-40,620 C210,480 340,740 560,550 C710,410 780,520 860,390" fill="none" stroke="url(#neonWave2)" stroke-width="1.8" opacity="0.55" />
+      </svg>
+
+      <!-- Marca superior izquierda -->
+      <div class="relative z-10 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 text-slate-950 shadow-lg shadow-cyan-500/30">
+            <i class="bi bi-stars text-xl"></i>
+          </span>
+          <div>
+            <span class="font-display text-2xl font-extrabold tracking-wider text-white block leading-none">NEON<span class="neon-text">VAPE</span></span>
+            <span class="text-[10px] uppercase tracking-[0.3em] text-cyan-300/80 font-semibold">Cloud Lab Core</span>
+          </div>
+        </div>
+        <a href="cliente.html" class="px-4 py-2 rounded-full text-xs font-semibold bg-white/5 hover:bg-white/15 border border-white/15 text-slate-200 transition no-underline flex items-center gap-2">
+          <i class="bi bi-shop"></i> Ver Tienda
+        </a>
+      </div>
+
+      <!-- Mensaje central / inferior eufórico -->
+      <div class="relative z-10 my-auto py-8 lg:py-0 max-w-xl">
+        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.22em] bg-fuchsia-500/15 border border-fuchsia-400/35 text-fuchsia-300 mb-5">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          Command Center v2.0
+        </span>
+        <h1 class="font-display text-4xl sm:text-5xl xl:text-6xl font-extrabold text-white leading-[1.05] tracking-tight mb-4">
+          Control total del <span class="neon-text">ecosistema</span> NEONVAPE.
+        </h1>
+        <p class="text-slate-300/85 text-base sm:text-lg leading-relaxed max-w-md m-0">
+          Supervisa dispositivos, métricas de stock en tiempo real, valoración de catálogo y taxonomía de categorías desde una consola unificada.
+        </p>
+      </div>
+
+      <!-- Footer decorativo del arte -->
+      <div class="relative z-10 flex flex-wrap items-center gap-6 text-xs text-slate-400 uppercase tracking-widest">
+        <span class="flex items-center gap-2"><i class="bi bi-cpu text-cyan-400"></i> MockAPI Live Sync</span>
+        <span class="flex items-center gap-2"><i class="bi bi-shield-check text-fuchsia-400"></i> Session Auth</span>
+        <span class="flex items-center gap-2"><i class="bi bi-lightning-charge text-purple-400"></i> Real-Time KPIs</span>
+      </div>
+    </div>
+
+    <!-- Mitad Derecha: Formulario de Acceso -->
+    <div class="lg:col-span-5 flex items-center justify-center p-6 sm:p-10 lg:p-14 relative">
+      <div class="glass-panel w-full max-w-md p-8 sm:p-10 rounded-3xl">
+        <div class="mb-8">
+          <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400/20 via-purple-500/20 to-pink-500/20 border border-cyan-400/30 text-cyan-300 mb-5">
+            <i class="bi bi-shield-lock-fill text-2xl"></i>
+          </div>
+          <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-white mb-2">
+            Acceso <span class="neon-text">Administrador</span>
+          </h2>
+          <p class="text-sm text-slate-400 m-0">Ingresa la clave maestra para desbloquear el centro de comando.</p>
+        </div>
+
+        <form id="form-login" onsubmit="iniciarSesion(event)">
+          <div class="mb-5">
+            <label for="admin-password" class="form-label font-semibold text-xs uppercase tracking-wider text-cyan-300 mb-2">
+              Contraseña Maestra
+            </label>
+            <div class="relative">
+              <input type="password" id="admin-password" class="form-control form-control-cyber py-3 pe-11" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-cyan-300 transition bg-transparent border-0 p-1" title="Mostrar u ocultar contraseña">
+                <i id="icon-toggle-pass" class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div id="login-error" class="hidden mb-4 px-4 py-3 rounded-xl bg-rose-500/15 border border-rose-400/40 text-rose-200 text-sm flex items-center gap-2" role="alert">
+            <i class="bi bi-exclamation-triangle-fill text-rose-400"></i>
+            <span>Contraseña incorrecta. Inténtalo nuevamente.</span>
+          </div>
+
+          <button type="submit" id="btn-login" class="btn btn-neon w-full py-3 rounded-xl text-base flex items-center justify-center gap-2">
+            <i class="bi bi-unlock-fill"></i> Desbloquear Consola
+          </button>
+        </form>
+
+        <div class="mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-xs text-slate-500">
+          <span>NEONVAPE Security Gate</span>
+          <a href="cliente.html" class="text-cyan-300/80 hover:text-cyan-300 no-underline font-semibold">
+            Volver a cliente.html <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VISTA 2: COMMAND CENTER PANEL ==================== -->
+  <div id="vista-admin" class="hidden relative z-10 min-h-screen">
+
+    <!-- Backdrop móvil para Sidebar -->
+    <div id="sidebar-backdrop" onclick="toggleSidebar(false)" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+
+    <!-- Sidebar Lateral Izquierdo Fijo (Colapsable en móvil) -->
+    <aside id="command-sidebar" class="glass-sidebar fixed top-0 left-0 bottom-0 w-72 z-50 flex flex-col justify-between p-5 transition-transform duration-300 -translate-x-full lg:translate-x-0">
+      <div>
+        <!-- Header del Sidebar -->
+        <div class="flex items-center justify-between pb-5 mb-6 border-b border-white/10">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 text-slate-950 shadow-lg shadow-cyan-500/25">
+              <i class="bi bi-stars text-lg"></i>
+            </span>
+            <div>
+              <div class="font-display text-xl font-extrabold tracking-wider text-white leading-none">
+                NEON<span class="neon-text">VAPE</span>
+              </div>
+              <span class="text-[10px] uppercase tracking-[0.25em] text-fuchsia-300/80 font-semibold">Command Core</span>
+            </div>
+          </div>
+          <button type="button" onclick="toggleSidebar(false)" class="lg:hidden text-slate-400 hover:text-white bg-white/5 rounded-lg p-1.5 border border-white/10" aria-label="Cerrar menú">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <!-- Navegación Principal -->
+        <div class="mb-2 px-2 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500">Módulos</div>
+        <nav class="space-y-1.5 mb-6" aria-label="Navegación Command Center">
+          <button type="button" id="nav-tab-inventario" onclick="cambiarVista('inventario')" class="nav-pill-cmd active">
+            <i class="bi bi-box-seam-fill text-lg"></i>
+            <span>Inventario</span>
+            <span id="badge-count-productos" class="ms-auto text-[11px] px-2 py-0.5 rounded-full bg-cyan-400/15 text-cyan-300 border border-cyan-400/25">0</span>
+          </button>
+
+          <button type="button" id="nav-tab-categorias" onclick="cambiarVista('categorias')" class="nav-pill-cmd">
+            <i class="bi bi-tags-fill text-lg"></i>
+            <span>Categorías</span>
+            <span id="badge-count-categorias" class="ms-auto text-[11px] px-2 py-0.5 rounded-full bg-fuchsia-400/15 text-fuchsia-300 border border-fuchsia-400/25">0</span>
+          </button>
+        </nav>
+
+        <!-- Enlace a Tienda -->
+        <div class="mb-2 px-2 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500">Ecosistema</div>
+        <a href="cliente.html" class="nav-pill-cmd">
+          <i class="bi bi-shop-window text-lg text-purple-300"></i>
+          <span>Ir a Tienda</span>
+          <i class="bi bi-box-arrow-up-right ms-auto text-xs text-slate-500"></i>
+        </a>
+      </div>
+
+      <!-- Footer del Sidebar: Estado y Cerrar Sesión -->
+      <div class="pt-5 border-t border-white/10 space-y-3">
+        <div class="px-3 py-2.5 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center gap-2.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399]"></span>
+          <div class="text-xs">
+            <div class="text-slate-200 font-semibold">MockAPI Conectado</div>
+            <div class="text-slate-500 text-[11px]">Sincronización en vivo</div>
+          </div>
+        </div>
+
+        <button id="btn-cerrar-sesion" type="button" onclick="cerrarSesion()" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-rose-500/15 hover:bg-rose-500/30 border border-rose-400/35 text-rose-200 transition">
+          <i class="bi bi-power"></i> Cerrar Sesión
+        </button>
+      </div>
+    </aside>
+
+    <!-- Área Principal del Command Center -->
+    <main class="lg:pl-72 min-h-screen flex flex-col">
+
+      <!-- Barra Compacta Móvil (solo visible en pantallas < lg) -->
+      <div class="lg:hidden sticky top-0 z-30 glass-panel border-b border-white/10 px-4 py-3 flex items-center justify-between">
+        <button type="button" onclick="toggleSidebar(true)" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/15 text-white text-sm font-semibold">
+          <i class="bi bi-list text-lg text-cyan-300"></i> Menú
+        </button>
+        <span class="font-display text-lg font-extrabold tracking-wider text-white">NEON<span class="neon-text">VAPE</span></span>
+        <button type="button" onclick="abrirDrawerNuevo()" class="inline-flex items-center gap-1 px-3 py-2 rounded-xl btn-neon text-xs">
+          <i class="bi bi-plus-lg"></i> Nuevo
+        </button>
+      </div>
+
+      <div class="p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto flex-grow space-y-8">
+
+        <!-- Encabezado Contextual -->
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <span class="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-cyan-300 bg-cyan-500/10 border border-cyan-400/25 px-3 py-1 rounded-full mb-2">
+              <i class="bi bi-activity"></i> Telemetría en vivo
+            </span>
+            <h1 id="titulo-modulo-actual" class="font-display text-3xl sm:text-4xl font-extrabold text-white tracking-tight m-0">
+              Centro de <span class="neon-text">Inventario</span>
+            </h1>
+          </div>
+
+          <button type="button" onclick="cargarDatosIniciales(true)" class="self-start sm:self-auto inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 border border-white/15 text-slate-200 transition">
+            <i id="icon-sync" class="bi bi-arrow-repeat text-cyan-300"></i> Sincronizar API
+          </button>
+        </div>
+
+        <!-- FILA SUPERIOR: 4 TARJETAS KPI CALCULADAS EN VIVO -->
+        <section aria-label="Indicadores clave" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <!-- KPI 1: Total Dispositivos -->
+          <div class="glass-panel kpi-card p-5 rounded-2xl" style="--kpi-accent: #00f5d4;">
+            <div class="flex items-start justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Dispositivos</span>
+              <span class="w-9 h-9 rounded-xl bg-cyan-400/15 border border-cyan-400/30 text-cyan-300 inline-flex items-center justify-center">
+                <i class="bi bi-cpu-fill"></i>
+              </span>
+            </div>
+            <div id="kpi-total-dispositivos" class="font-display text-3xl font-extrabold text-white">0</div>
+            <div class="text-xs text-slate-400 mt-1">Modelos registrados en catálogo</div>
+          </div>
+
+          <!-- KPI 2: Stock Global -->
+          <div class="glass-panel kpi-card p-5 rounded-2xl" style="--kpi-accent: #a855f7;">
+            <div class="flex items-start justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Stock Global</span>
+              <span class="w-9 h-9 rounded-xl bg-purple-400/15 border border-purple-400/30 text-purple-300 inline-flex items-center justify-center">
+                <i class="bi bi-boxes"></i>
+              </span>
+            </div>
+            <div id="kpi-stock-global" class="font-display text-3xl font-extrabold text-white">0</div>
+            <div class="text-xs text-slate-400 mt-1">Unidades totales disponibles</div>
+          </div>
+
+          <!-- KPI 3: Valor del Inventario -->
+          <div class="glass-panel kpi-card p-5 rounded-2xl" style="--kpi-accent: #ff00a8;">
+            <div class="flex items-start justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Valor del Inventario</span>
+              <span class="w-9 h-9 rounded-xl bg-fuchsia-400/15 border border-fuchsia-400/30 text-fuchsia-300 inline-flex items-center justify-center">
+                <i class="bi bi-currency-dollar"></i>
+              </span>
+            </div>
+            <div id="kpi-valor-inventario" class="font-display text-3xl font-extrabold text-white">$0.00</div>
+            <div class="text-xs text-slate-400 mt-1">Capitalización total (Precio × Stock)</div>
+          </div>
+
+          <!-- KPI 4: Categorías Activas -->
+          <div class="glass-panel kpi-card p-5 rounded-2xl" style="--kpi-accent: #38bdf8;">
+            <div class="flex items-start justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Categorías Activas</span>
+              <span class="w-9 h-9 rounded-xl bg-sky-400/15 border border-sky-400/30 text-sky-300 inline-flex items-center justify-center">
+                <i class="bi bi-grid-1x2-fill"></i>
+              </span>
+            </div>
+            <div id="kpi-categorias-activas" class="font-display text-3xl font-extrabold text-white">0</div>
+            <div class="text-xs text-slate-400 mt-1">Líneas de producto segmentadas</div>
+          </div>
+        </section>
+
+        <!-- ==================== MÓDULO 1: VISTA INVENTARIO ==================== -->
+        <section id="tab-inventario" class="space-y-5">
+
+          <!-- Barra de Herramientas Superior -->
+          <div class="glass-panel p-4 rounded-2xl flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-grow">
+              <!-- Buscador en tiempo real -->
+              <div class="relative flex-grow max-w-md">
+                <i class="bi bi-search absolute left-3.5 top-1/2 -translate-y-1/2 text-cyan-300/80"></i>
+                <input type="text" id="buscador-productos" oninput="filtrarYRenderizarInventario()" class="form-control form-control-cyber ps-10 pe-9 py-2.5" placeholder="Buscar por marca, modelo o categoría...">
+                <button type="button" id="btn-limpiar-busqueda" onclick="limpiarFiltros()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-transparent border-0 p-0" title="Limpiar búsqueda">
+                  <i class="bi bi-x-circle-fill"></i>
+                </button>
+              </div>
+
+              <!-- Filtro por Categoría -->
+              <div class="sm:w-60">
+                <select id="filtro-categoria" onchange="filtrarYRenderizarInventario()" class="form-select form-select-cyber py-2.5" aria-label="Filtrar por categoría">
+                  <option value="">Todas las categorías</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Botón destacado + Nuevo Vape -->
+            <button type="button" id="btn-nuevo-vape" onclick="abrirDrawerNuevo()" class="btn btn-neon px-5 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 whitespace-nowrap shadow-lg shadow-fuchsia-500/20">
+              <i class="bi bi-plus-lg"></i> Nuevo Vape
+            </button>
+          </div>
+
+          <!-- Tabla Moderna de Ancho Completo -->
+          <div class="glass-panel rounded-3xl overflow-hidden">
+            <div class="px-5 py-4 border-b border-white/10 flex flex-wrap items-center justify-between gap-2">
+              <h2 class="font-display text-lg font-bold text-white m-0">Catálogo de Dispositivos</h2>
+              <span id="contador-resultados" class="text-xs text-slate-400 font-medium">Mostrando 0 dispositivos</span>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover table-cyber align-middle mb-0">
+                <thead>
+                  <tr class="text-[11px] uppercase tracking-wider text-cyan-300 border-b border-white/10">
+                    <th>Dispositivo</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th class="text-end">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tabla-admin-productos">
+                  <!-- Renderizado dinámico JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Estado Vacío -->
+            <div id="estado-vacio-inventario" class="hidden py-14 px-6 text-center">
+              <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/5 border border-white/10 text-slate-400 mb-3">
+                <i class="bi bi-inbox text-2xl"></i>
+              </div>
+              <h3 class="font-display text-lg font-bold text-white mb-1">Sin resultados en el inventario</h3>
+              <p class="text-sm text-slate-400 mb-4">No hay dispositivos que coincidan con los filtros actuales.</p>
+              <button type="button" onclick="limpiarFiltros()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-400/15 border border-cyan-400/35 text-cyan-300 hover:bg-cyan-400/25 transition">
+                Restablecer filtros
+              </button>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ==================== MÓDULO 2: VISTA CATEGORÍAS ==================== -->
+        <section id="tab-categorias" class="hidden space-y-6">
+
+          <!-- Formulario rápido para crear categoría -->
+          <div class="glass-panel p-6 rounded-3xl">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h2 class="font-display text-xl font-bold text-white mb-1">Gestión de Categorías</h2>
+                <p class="text-sm text-slate-400 m-0">Crea nuevas líneas de dispositivos y visualiza la distribución del catálogo.</p>
+              </div>
+              <form id="form-categoria" onsubmit="crearCategoria(event)" class="flex flex-col sm:flex-row gap-2.5 w-full md:w-auto md:min-w-[380px]">
+                <input type="text" id="nueva-categoria-nombre" class="form-control form-control-cyber py-2.5" placeholder="Nombre de nueva categoría (ej. Pod Mods)" required>
+                <button type="submit" class="btn btn-neon px-5 py-2.5 rounded-xl whitespace-nowrap inline-flex items-center justify-center gap-2">
+                  <i class="bi bi-plus-circle"></i> Crear
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Grilla Visual de Tarjetas de Categorías -->
+          <div id="grid-categorias" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <!-- Renderizado dinámico JS -->
+          </div>
+
+          <div id="estado-vacio-categorias" class="hidden glass-panel p-12 rounded-3xl text-center">
+            <i class="bi bi-tags text-3xl text-slate-500 mb-2 block"></i>
+            <p class="text-slate-400 m-0">No existen categorías registradas todavía. Crea la primera arriba.</p>
+          </div>
+
+        </section>
+
+      </div>
+
+      <footer class="px-8 py-4 text-center text-[11px] uppercase tracking-[0.22em] text-slate-500 border-t border-white/5">
+        NEONVAPE CLOUD LAB · Command Center · MockAPI Relational Engine
+      </footer>
+    </main>
+  </div>
+
+  <!-- ==================== DRAWER LATERAL: CREAR / EDITAR VAPE ==================== -->
+  <div class="offcanvas offcanvas-end offcanvas-cyber" tabindex="-1" id="drawerProducto" aria-labelledby="titulo-form-producto">
+    <div class="offcanvas-header border-b border-white/10 p-6">
+      <div>
+        <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-cyan-300 block mb-1">// Editor de Dispositivo</span>
+        <h5 class="offcanvas-title font-display text-2xl font-extrabold text-white" id="titulo-form-producto">
+          Nuevo Vape
+        </h5>
+      </div>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+
+    <div class="offcanvas-body p-6">
+      <form id="form-producto" onsubmit="guardarProducto(event)" class="space-y-4">
+        <input type="hidden" id="producto-id">
+
+        <!-- Vista previa en vivo de imagen -->
+        <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center gap-4">
+          <div class="w-16 h-16 rounded-xl bg-white p-1.5 flex-shrink-0 flex items-center justify-center overflow-hidden">
+            <img id="preview-imagen-form" src="https://via.placeholder.com/80?text=VAPE" alt="Vista previa" class="w-full h-full object-contain">
+          </div>
+          <div class="text-xs text-slate-400">
+            <div class="font-semibold text-slate-200 mb-0.5">Previsualización</div>
+            <span>Se actualiza al ingresar la URL de la imagen.</span>
+          </div>
+        </div>
+
+        <div>
+          <label for="producto-marca" class="form-label font-semibold text-xs uppercase tracking-wider text-cyan-300">Marca</label>
+          <input type="text" id="producto-marca" class="form-control form-control-cyber py-2.5" placeholder="Ej: Vaporesso, OXVA, Geek Bar" required>
+        </div>
+
+        <div>
+          <label for="producto-modelo" class="form-label font-semibold text-xs uppercase tracking-wider text-cyan-300">Modelo</label>
+          <input type="text" id="producto-modelo" class="form-control form-control-cyber py-2.5" placeholder="Ej: XROS 6 Cosmic Black" required>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="producto-precio" class="form-label font-semibold text-xs uppercase tracking-wider text-cyan-300">Precio ($ USD)</label>
+            <input type="number" step="0.01" min="0" id="producto-precio" class="form-control form-control-cyber py-2.5" placeholder="34.90" required>
+          </div>
+          <div>
+            <label for="producto-stock" class="form-label font-semibold text-xs uppercase tracking-wider text-cyan-300">Stock (und.)</label>
+            <input type="number" min="0" id="producto-stock" class="form-control form-control-cyber py-2.5" value="10" required>
+          </div>
+        </div>
+
+        <div>
+          <label for="producto-categoria" class="form-label font-semibold text-xs uppercase tracking-wider text-cyan-300">Categoría (Relación)</label>
+          <select id="producto-categoria" class="form-select form-select-cyber py-2.5" required>
+            <option value="">Seleccione una categoría...</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="producto-imagen" class="form-label font-semibold text-xs uppercase tracking-wider text-cyan-300">URL de la Imagen</label>
+          <input type="url" id="producto-imagen" oninput="actualizarPreviewImagen(this.value)" class="form-control form-control-cyber py-2.5" placeholder="https://ejemplo.com/vape.png" required>
+        </div>
+
+        <div class="pt-4 flex gap-2.5">
+          <button type="submit" id="btn-guardar-producto" class="btn btn-neon w-full py-3 rounded-xl inline-flex items-center justify-center gap-2">
+            <i class="bi bi-save"></i> Guardar Dispositivo
+          </button>
+          <button type="button" data-bs-dismiss="offcanvas" class="px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-slate-300 text-sm font-semibold transition">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL DETALLE (VER) ==================== -->
+  <div class="modal fade modal-cyber" id="modalDetalle" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-3xl overflow-hidden">
+        <div class="modal-header border-b border-white/10" style="background: linear-gradient(135deg, rgba(0,245,212,0.18), rgba(123,44,191,0.28));">
+          <h5 class="modal-title font-display font-bold text-white flex items-center gap-2">
+            <i class="bi bi-stars text-cyan-300"></i> Ficha del Dispositivo
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div id="detalle-producto" class="modal-body p-6 text-slate-200 space-y-3">
+          <!-- Contenido dinámico -->
+        </div>
+        <div class="modal-footer border-t border-white/10 px-6 py-4 flex justify-between">
+          <button type="button" id="btn-editar-desde-detalle" class="px-4 py-2 rounded-full text-sm font-semibold bg-amber-400/15 border border-amber-400/35 text-amber-200 hover:bg-amber-400/25 transition">
+            <i class="bi bi-pencil-square me-1"></i> Editar
+          </button>
+          <button type="button" class="btn btn-neon px-5 rounded-full" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL CONFIRMACIÓN (ELIMINAR) ==================== -->
+  <div class="modal fade modal-cyber" id="modalConfirmar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content rounded-3xl overflow-hidden">
+        <div class="modal-body p-6 text-center">
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-400/40 text-rose-300 mb-3">
+            <i class="bi bi-exclamation-triangle-fill text-xl"></i>
+          </div>
+          <h5 class="font-display font-bold text-white mb-2" id="confirmar-titulo">Confirmar acción</h5>
+          <p class="text-sm text-slate-400 mb-5" id="confirmar-mensaje">¿Deseas continuar?</p>
+          <div class="flex gap-2">
+            <button type="button" class="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-slate-300 text-sm font-semibold transition" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" id="btn-confirmar-accion" class="w-full py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-sm font-bold border-0 transition">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5.3.2 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- ==================== LÓGICA JAVASCRIPT ==================== -->
+  <script>
+    const API_URL = 'https://6b00fc4c1c637a569e52b6c0.mockapi.io';
+    const ADMIN_PASSWORD = 'admin123';
+
+    let listaCategorias = [];
+    let listaProductos = [];
+    let vistaActual = 'inventario';
+    let accionConfirmadaCallback = null;
+
+    function esc(texto) {
+      return String(texto ?? '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[c]));
+    }
+
+    function mostrarToast(mensaje, tipo = 'success') {
+      const container = document.getElementById('toast-container');
+      const estilos = {
+        success: 'border-cyan-400/40 bg-[#081523]/95 text-cyan-200',
+        error: 'border-rose-400/40 bg-[#1f0915]/95 text-rose-200',
+        info: 'border-purple-400/40 bg-[#130a24]/95 text-purple-200'
+      };
+      const iconos = {
+        success: 'bi-check-circle-fill text-cyan-400',
+        error: 'bi-x-octagon-fill text-rose-400',
+        info: 'bi-info-circle-fill text-purple-400'
+      };
+
+      const toastEl = document.createElement('div');
+      toastEl.className = `pointer-events-auto px-4 py-3 rounded-2xl border backdrop-blur-xl shadow-2xl flex items-center gap-3 text-sm font-medium transition-all duration-300 ${estilos[tipo] || estilos.info}`;
+      toastEl.innerHTML = `<i class="bi ${iconos[tipo] || iconos.info} text-base"></i><span>${esc(mensaje)}</span>`;
+      container.appendChild(toastEl);
+
+      setTimeout(() => {
+        toastEl.style.opacity = '0';
+        toastEl.style.transform = 'translateY(8px)';
+        setTimeout(() => toastEl.remove(), 300);
+      }, 3200);
+    }
+
+    function pedirConfirmacion(titulo, mensaje, callback) {
+      document.getElementById('confirmar-titulo').textContent = titulo;
+      document.getElementById('confirmar-mensaje').textContent = mensaje;
+      accionConfirmadaCallback = callback;
+      const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalConfirmar'));
+      modal.show();
+    }
+
+    document.getElementById('btn-confirmar-accion').addEventListener('click', async () => {
+      const modal = bootstrap.Modal.getInstance(document.getElementById('modalConfirmar'));
+      if (modal) modal.hide();
+      if (typeof accionConfirmadaCallback === 'function') {
+        const cb = accionConfirmadaCallback;
+        accionConfirmadaCallback = null;
+        await cb();
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        if (sessionStorage.getItem('neonvape_admin_auth') === 'true') {
+          await mostrarPanelAdmin();
+        }
+      } catch (e) {
+        console.warn('sessionStorage no disponible:', e);
+      }
+    });
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById('admin-password');
+      const icon = document.getElementById('icon-toggle-pass');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'bi bi-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'bi bi-eye';
+      }
+    }
+
+    async function iniciarSesion(event) {
+      event.preventDefault();
+      const inputPass = document.getElementById('admin-password').value;
+      const errorEl = document.getElementById('login-error');
+
+      if (inputPass === ADMIN_PASSWORD) {
+        errorEl.classList.add('hidden');
+        try {
+          sessionStorage.setItem('neonvape_admin_auth', 'true');
+        } catch (e) {
+          console.warn('No se pudo guardar en sessionStorage:', e);
+        }
+        document.getElementById('form-login').reset();
+        await mostrarPanelAdmin();
+      } else {
+        errorEl.classList.remove('hidden');
+      }
+    }
+
+    async function mostrarPanelAdmin() {
+      document.getElementById('vista-login').classList.add('hidden');
+      document.getElementById('vista-admin').classList.remove('hidden');
+      await cargarDatosIniciales();
+    }
+
+    function cerrarSesion() {
+      try {
+        sessionStorage.removeItem('neonvape_admin_auth');
+      } catch (e) {
+        console.warn('No se pudo limpiar sessionStorage:', e);
+      }
+      toggleSidebar(false);
+      document.getElementById('vista-admin').classList.add('hidden');
+      document.getElementById('vista-login').classList.remove('hidden');
+    }
+
+    function toggleSidebar(abrir) {
+      const sidebar = document.getElementById('command-sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      if (abrir) {
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
+    function cambiarVista(vista) {
+      vistaActual = vista;
+      const tabInv = document.getElementById('tab-inventario');
+      const tabCat = document.getElementById('tab-categorias');
+      const navInv = document.getElementById('nav-tab-inventario');
+      const navCat = document.getElementById('nav-tab-categorias');
+      const titulo = document.getElementById('titulo-modulo-actual');
+
+      if (vista === 'inventario') {
+        tabInv.classList.remove('hidden');
+        tabCat.classList.add('hidden');
+        navInv.classList.add('active');
+        navCat.classList.remove('active');
+        titulo.innerHTML = 'Centro de <span class="neon-text">Inventario</span>';
+      } else {
+        tabInv.classList.add('hidden');
+        tabCat.classList.remove('hidden');
+        navInv.classList.remove('active');
+        navCat.classList.add('active');
+        titulo.innerHTML = 'Arquitectura de <span class="neon-text">Categorías</span>';
+      }
+
+      if (window.innerWidth < 1024) {
+        toggleSidebar(false);
+      }
+    }
+
+    async function cargarDatosIniciales(manual = false) {
+      const iconSync = document.getElementById('icon-sync');
+      if (iconSync) iconSync.classList.add('animate-spin');
+
+      try {
+        const [resCat, resProd] = await Promise.all([
+          fetch(`${API_URL}/categorias`),
+          fetch(`${API_URL}/productos`)
+        ]);
+
+        if (!resCat.ok || !resProd.ok) {
+          throw new Error(`HTTP ${resCat.status} / ${resProd.status}`);
+        }
+
+        listaCategorias = await resCat.json();
+        listaProductos = await resProd.json();
+
+        actualizarKPIs();
+        renderizarSelectCategorias();
+        renderizarGrillaCategorias();
+        filtrarYRenderizarInventario();
+
+        if (manual) {
+          mostrarToast('Datos sincronizados con MockAPI.', 'info');
+        }
+      } catch (error) {
+        console.error('Error al conectar con MockAPI:', error);
+        mostrarToast('Error al cargar datos desde MockAPI.', 'error');
+      } finally {
+        if (iconSync) iconSync.classList.remove('animate-spin');
+      }
+    }
+
+    function obtenerNombreCategoria(categoriaId) {
+      const cat = listaCategorias.find(c => String(c.id) === String(categoriaId));
+      return cat ? cat.nombre : 'Sin categoría';
+    }
+
+    function obtenerStockProducto(prod) {
+      if (prod && prod.stock !== undefined && prod.stock !== '' && !Number.isNaN(Number(prod.stock))) {
+        return Math.max(0, parseInt(prod.stock, 10));
+      }
+      return 10;
+    }
+
+    function actualizarKPIs() {
+      const totalDispositivos = listaProductos.length;
+      let stockGlobal = 0;
+      let valorInventario = 0;
+
+      listaProductos.forEach(prod => {
+        const stock = obtenerStockProducto(prod);
+        const precio = Number(prod.precio);
+        stockGlobal += stock;
+        if (!Number.isNaN(precio) && precio > 0) {
+          valorInventario += precio * stock;
+        }
+      });
+
+      const categoriasActivas = listaCategorias.length;
+
+      document.getElementById('kpi-total-dispositivos').textContent = totalDispositivos;
+      document.getElementById('kpi-stock-global').textContent = stockGlobal.toLocaleString('en-US');
+      document.getElementById('kpi-valor-inventario').textContent = `$${valorInventario.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      document.getElementById('kpi-categorias-activas').textContent = categoriasActivas;
+
+      document.getElementById('badge-count-productos').textContent = totalDispositivos;
+      document.getElementById('badge-count-categorias').textContent = categoriasActivas;
+    }
+
+    function renderizarSelectCategorias() {
+      const selectForm = document.getElementById('producto-categoria');
+      const filtroCat = document.getElementById('filtro-categoria');
+      const valorFiltroPrevio = filtroCat.value;
+
+      selectForm.innerHTML = '<option value="">Seleccione una categoría...</option>';
+      filtroCat.innerHTML = '<option value="">Todas las categorías</option>';
+
+      listaCategorias.forEach(cat => {
+        selectForm.innerHTML += `<option value="${esc(cat.id)}">${esc(cat.nombre)}</option>`;
+        filtroCat.innerHTML += `<option value="${esc(cat.id)}">${esc(cat.nombre)}</option>`;
+      });
+
+      if (valorFiltroPrevio && listaCategorias.some(c => String(c.id) === String(valorFiltroPrevio))) {
+        filtroCat.value = valorFiltroPrevio;
+      }
+    }
+
+    function filtrarYRenderizarInventario() {
+      const termino = (document.getElementById('buscador-productos').value || '').trim().toLowerCase();
+      const catId = document.getElementById('filtro-categoria').value;
+      const btnLimpiar = document.getElementById('btn-limpiar-busqueda');
+
+      if (termino) {
+        btnLimpiar.classList.remove('hidden');
+      } else {
+        btnLimpiar.classList.add('hidden');
+      }
+
+      const filtrados = listaProductos.filter(prod => {
+        const coincideCat = !catId || String(prod.categoriaId) === String(catId);
+        if (!coincideCat) return false;
+        if (!termino) return true;
+
+        const nombreCat = obtenerNombreCategoria(prod.categoriaId).toLowerCase();
+        const modelo = String(prod.modelo || '').toLowerCase();
+        const marca = String(prod.marca || '').toLowerCase();
+        return modelo.includes(termino) || marca.includes(termino) || nombreCat.includes(termino);
+      });
+
+      renderizarTablaAdmin(filtrados);
+    }
+
+    function limpiarFiltros() {
+      document.getElementById('buscador-productos').value = '';
+      document.getElementById('filtro-categoria').value = '';
+      filtrarYRenderizarInventario();
+    }
+
+    function filtrarPorCategoriaDesdeGrid(categoriaId) {
+      document.getElementById('filtro-categoria').value = categoriaId;
+      cambiarVista('inventario');
+      filtrarYRenderizarInventario();
+    }
+
+    function renderizarTablaAdmin(productos) {
+      const tbody = document.getElementById('tabla-admin-productos');
+      const estadoVacio = document.getElementById('estado-vacio-inventario');
+      const contador = document.getElementById('contador-resultados');
+
+      tbody.innerHTML = '';
+      contador.textContent = `Mostrando ${productos.length} de ${listaProductos.length} dispositivos`;
+
+      if (productos.length === 0) {
+        estadoVacio.classList.remove('hidden');
+        return;
+      }
+      estadoVacio.classList.add('hidden');
+
+      productos.forEach(prod => {
+        const nombreCategoria = obtenerNombreCategoria(prod.categoriaId);
+        const precioNum = Number(prod.precio);
+        const precioTexto = Number.isNaN(precioNum) ? 'N/D' : `$${precioNum.toFixed(2)}`;
+        const stockValor = obtenerStockProducto(prod);
+
+        let stockBadgeClass = 'bg-cyan-500/15 text-cyan-300 border-cyan-400/30';
+        if (stockValor === 0) {
+          stockBadgeClass = 'bg-rose-500/20 text-rose-300 border-rose-400/35';
+        } else if (stockValor <= 5) {
+          stockBadgeClass = 'bg-amber-500/20 text-amber-300 border-amber-400/35';
+        }
+
+        tbody.innerHTML += `
+          <tr class="transition-colors">
+            <td>
+              <div class="flex items-center gap-3.5">
+                <img src="${esc(prod.imagen)}" alt="${esc(prod.modelo)}" class="w-12 h-12 object-contain rounded-xl bg-white p-1 flex-shrink-0 shadow-md" onerror="this.src='https://via.placeholder.com/50'">
+                <div>
+                  <div class="font-bold text-white leading-snug">${esc(prod.modelo)}</div>
+                  <div class="text-[11px] text-fuchsia-400 font-semibold uppercase tracking-wider">${esc(prod.marca)}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="inline-flex items-center text-xs font-semibold px-3 py-1 rounded-full bg-purple-500/15 border border-purple-400/30 text-purple-200">${esc(nombreCategoria)}</span>
+            </td>
+            <td class="font-display font-bold text-cyan-300">${precioTexto}</td>
+            <td>
+              <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full border ${stockBadgeClass}">
+                ${stockValor} und.
+              </span>
+            </td>
+            <td class="text-end">
+              <div class="inline-flex items-center justify-end gap-1.5 flex-nowrap">
+                <button type="button" onclick="verProducto('${esc(prod.id)}')" class="w-8 h-8 rounded-lg inline-flex items-center justify-center bg-cyan-400/10 hover:bg-cyan-400/25 border border-cyan-400/30 text-cyan-300 transition" title="Ver ficha">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <button type="button" onclick="cargarProductoEnFormulario('${esc(prod.id)}')" class="w-8 h-8 rounded-lg inline-flex items-center justify-center bg-amber-400/10 hover:bg-amber-400/25 border border-amber-400/30 text-amber-300 transition" title="Editar">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button type="button" onclick="eliminarProducto('${esc(prod.id)}')" class="w-8 h-8 rounded-lg inline-flex items-center justify-center bg-rose-400/10 hover:bg-rose-400/25 border border-rose-400/30 text-rose-300 transition" title="Eliminar">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function renderizarGrillaCategorias() {
+      const grid = document.getElementById('grid-categorias');
+      const vacio = document.getElementById('estado-vacio-categorias');
+      grid.innerHTML = '';
+
+      if (listaCategorias.length === 0) {
+        vacio.classList.remove('hidden');
+        return;
+      }
+      vacio.classList.add('hidden');
+
+      listaCategorias.forEach(cat => {
+        const productosEnCat = listaProductos.filter(p => String(p.categoriaId) === String(cat.id));
+        const cantidadProductos = productosEnCat.length;
+        const unidadesStock = productosEnCat.reduce((acc, p) => acc + obtenerStockProducto(p), 0);
+
+        grid.innerHTML += `
+          <div class="glass-panel kpi-card p-5 rounded-3xl flex flex-col justify-between gap-4" style="--kpi-accent: #ff00a8;">
+            <div class="flex items-start justify-between gap-3">
+              <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-fuchsia-500/20 border border-white/15 flex items-center justify-center text-cyan-300">
+                <i class="bi bi-tag-fill text-lg"></i>
+              </div>
+              <button type="button" onclick="eliminarCategoria('${esc(cat.id)}')" class="w-8 h-8 rounded-xl inline-flex items-center justify-center bg-rose-500/10 hover:bg-rose-500/25 border border-rose-400/30 text-rose-300 transition" title="Eliminar categoría">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+
+            <div>
+              <h3 class="font-display text-lg font-bold text-white mb-1 truncate" title="${esc(cat.nombre)}">${esc(cat.nombre)}</h3>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span class="text-cyan-300 font-semibold">${cantidadProductos} ${cantidadProductos === 1 ? 'producto' : 'productos'}</span>
+                <span>•</span>
+                <span>${unidadesStock} und. stock</span>
+              </div>
+            </div>
+
+            <button type="button" onclick="filtrarPorCategoriaDesdeGrid('${esc(cat.id)}')" class="w-full py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 transition flex items-center justify-center gap-1.5">
+              Ver dispositivos <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        `;
+      });
+    }
+
+    function verProducto(id) {
+      const prod = listaProductos.find(p => String(p.id) === String(id));
+      if (!prod) return;
+
+      const nombreCategoria = obtenerNombreCategoria(prod.categoriaId);
+      const precioNum = Number(prod.precio);
+      const precioTexto = Number.isNaN(precioNum) ? 'No disponible' : `$${precioNum.toFixed(2)}`;
+      const stockValor = obtenerStockProducto(prod);
+
+      document.getElementById('detalle-producto').innerHTML = `
+        <div class="text-center mb-4 p-4 rounded-2xl bg-white">
+          <img src="${esc(prod.imagen)}" alt="${esc(prod.modelo)}" class="mx-auto h-40 object-contain" onerror="this.src='https://via.placeholder.com/150'">
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10">
+            <span class="text-[11px] uppercase tracking-wider text-cyan-300 block mb-0.5">Marca</span>
+            <strong class="text-white">${esc(prod.marca)}</strong>
+          </div>
+          <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10">
+            <span class="text-[11px] uppercase tracking-wider text-cyan-300 block mb-0.5">Modelo</span>
+            <strong class="text-white">${esc(prod.modelo)}</strong>
+          </div>
+          <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10">
+            <span class="text-[11px] uppercase tracking-wider text-cyan-300 block mb-0.5">Categoría</span>
+            <strong class="text-purple-200">${esc(nombreCategoria)}</strong>
+          </div>
+          <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10">
+            <span class="text-[11px] uppercase tracking-wider text-cyan-300 block mb-0.5">Precio</span>
+            <strong class="text-cyan-300 font-display">${precioTexto}</strong>
+          </div>
+        </div>
+        <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-between text-sm">
+          <span class="text-xs uppercase tracking-wider text-cyan-300 font-semibold">Stock disponible</span>
+          <strong class="text-white">${stockValor} unidades</strong>
+        </div>
+      `;
+
+      const btnEditarDesdeDetalle = document.getElementById('btn-editar-desde-detalle');
+      btnEditarDesdeDetalle.onclick = () => {
+        const modalInstance = bootstrap.Modal.getInstance(document.getElementById('modalDetalle'));
+        if (modalInstance) modalInstance.hide();
+        cargarProductoEnFormulario(prod.id);
+      };
+
+      const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalDetalle'));
+      modal.show();
+    }
+
+    function actualizarPreviewImagen(url) {
+      const preview = document.getElementById('preview-imagen-form');
+      preview.src = url && url.trim() ? url.trim() : 'https://via.placeholder.com/80?text=VAPE';
+      preview.onerror = () => {
+        preview.src = 'https://via.placeholder.com/80?text=VAPE';
+      };
+    }
+
+    function abrirDrawerNuevo() {
+      resetearFormulario();
+      const drawer = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById('drawerProducto'));
+      drawer.show();
+    }
+
+    function cargarProductoEnFormulario(id) {
+      const prod = listaProductos.find(p => String(p.id) === String(id));
+      if (!prod) return;
+
+      document.getElementById('producto-id').value = prod.id;
+      document.getElementById('producto-marca').value = prod.marca;
+      document.getElementById('producto-modelo').value = prod.modelo;
+      document.getElementById('producto-precio').value = Number.isNaN(Number(prod.precio)) ? '' : prod.precio;
+      document.getElementById('producto-stock').value = obtenerStockProducto(prod);
+      document.getElementById('producto-categoria').value = prod.categoriaId;
+      document.getElementById('producto-imagen').value = prod.imagen;
+      actualizarPreviewImagen(prod.imagen);
+
+      document.getElementById('titulo-form-producto').innerText = 'Editar Vape';
+
+      const drawer = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById('drawerProducto'));
+      drawer.show();
+    }
+
+    function resetearFormulario() {
+      document.getElementById('form-producto').reset();
+      document.getElementById('producto-id').value = '';
+      document.getElementById('producto-stock').value = 10;
+      document.getElementById('titulo-form-producto').innerText = 'Nuevo Vape';
+      actualizarPreviewImagen('');
+    }
+
+    async function guardarProducto(event) {
+      event.preventDefault();
+
+      const id = document.getElementById('producto-id').value;
+      const stockValor = Math.max(0, parseInt(document.getElementById('producto-stock').value, 10) || 0);
+
+      const datosProducto = {
+        marca: document.getElementById('producto-marca').value,
+        modelo: document.getElementById('producto-modelo').value,
+        precio: parseFloat(document.getElementById('producto-precio').value),
+        stock: stockValor,
+        categoriaId: document.getElementById('producto-categoria').value,
+        imagen: document.getElementById('producto-imagen').value
+      };
+
+      try {
+        if (id) {
+          const res = await fetch(`${API_URL}/productos/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosProducto)
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          mostrarToast('Dispositivo actualizado correctamente.');
+        } else {
+          const res = await fetch(`${API_URL}/productos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosProducto)
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          mostrarToast('Nuevo dispositivo agregado al inventario.');
+        }
+
+        const drawer = bootstrap.Offcanvas.getInstance(document.getElementById('drawerProducto'));
+        if (drawer) drawer.hide();
+        resetearFormulario();
+        await cargarDatosIniciales();
+      } catch (error) {
+        console.error('Error al guardar producto:', error);
+        mostrarToast('Error al guardar el dispositivo.', 'error');
+      }
+    }
+
+    function eliminarProducto(id) {
+      pedirConfirmacion(
+        'Eliminar dispositivo',
+        '¿Estás seguro de eliminar este dispositivo del inventario? También se retirará de los carritos activos.',
+        async () => {
+          try {
+            const res = await fetch(`${API_URL}/productos/${id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+            try {
+              let carrito = JSON.parse(localStorage.getItem('neonvape_carrito')) || [];
+              carrito = carrito.filter(item => String(item.id) !== String(id));
+              localStorage.setItem('neonvape_carrito', JSON.stringify(carrito));
+            } catch (storageErr) {
+              console.warn('No se pudo actualizar neonvape_carrito:', storageErr);
+            }
+
+            mostrarToast('Dispositivo eliminado del catálogo.', 'info');
+            await cargarDatosIniciales();
+          } catch (error) {
+            console.error('Error al eliminar:', error);
+            mostrarToast('Error al eliminar el dispositivo.', 'error');
+          }
+        }
+      );
+    }
+
+    async function crearCategoria(event) {
+      event.preventDefault();
+      const input = document.getElementById('nueva-categoria-nombre');
+      const nombre = input.value.trim();
+      if (!nombre) return;
+
+      try {
+        const res = await fetch(`${API_URL}/categorias`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        input.value = '';
+        mostrarToast(`Categoría "${nombre}" creada.`);
+        await cargarDatosIniciales();
+      } catch (error) {
+        console.error('Error al crear categoría:', error);
+        mostrarToast('Error al crear la categoría.', 'error');
+      }
+    }
+
+    function eliminarCategoria(id) {
+      pedirConfirmacion(
+        'Eliminar categoría',
+        '¿Deseas eliminar esta categoría? Los productos asociados quedarán sin categoría.',
+        async () => {
+          try {
+            const res = await fetch(`${API_URL}/categorias/${id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            mostrarToast('Categoría eliminada.', 'info');
+            await cargarDatosIniciales();
+          } catch (error) {
+            console.error('Error al eliminar categoría:', error);
+            mostrarToast('Error al eliminar la categoría.', 'error');
+          }
+        }
+      );
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEONVAPE // Cloud Lab — Catálogo Futurista</title>
+  <!-- Google Fonts: Syne & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5.3.2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --nv-bg: #05030d;
+      --nv-surface: rgba(14, 10, 30, 0.74);
+      --nv-surface-strong: rgba(11, 7, 25, 0.92);
+      --nv-cyan: #00f5d4;
+      --nv-magenta: #ff00a8;
+      --nv-violet: #7b2cbf;
+      --nv-blue: #38bdf8;
+      --nv-border: rgba(255, 255, 255, 0.11);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--nv-bg);
+      color: #f4f4ff;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Syne', sans-serif;
+    }
+
+    /* ==================== FONDO ABSTRACTO Y ORBES ==================== */
+    .cyber-mesh {
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(123, 44, 191, 0.16) 0%, transparent 45%),
+        radial-gradient(circle at 80% 75%, rgba(0, 245, 212, 0.12) 0%, transparent 45%),
+        linear-gradient(to right, rgba(0, 245, 212, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 0, 168, 0.035) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 52px 52px, 52px 52px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .cyber-vignette {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 35%, transparent 35%, rgba(5, 3, 13, 0.85) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 9999px;
+      filter: blur(100px);
+      opacity: 0.42;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatOrb 16s ease-in-out infinite alternate;
+    }
+    .orb-1 {
+      width: 460px;
+      height: 460px;
+      top: -140px;
+      left: -80px;
+      background: radial-gradient(circle, var(--nv-magenta), transparent 70%);
+    }
+    .orb-2 {
+      width: 520px;
+      height: 520px;
+      bottom: -160px;
+      right: -120px;
+      background: radial-gradient(circle, var(--nv-cyan), transparent 70%);
+      animation-delay: -6s;
+    }
+    .orb-3 {
+      width: 360px;
+      height: 360px;
+      top: 38%;
+      left: 52%;
+      background: radial-gradient(circle, var(--nv-violet), transparent 70%);
+      animation-delay: -11s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50% { transform: translate(32px, -28px) scale(1.1) rotate(8deg); }
+      100% { transform: translate(-20px, 24px) scale(0.96) rotate(-6deg); }
+    }
+
+    /* ==================== GLASSMORPHISM & NEÓN ==================== */
+    .glass-panel {
+      background: var(--nv-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--nv-border);
+    }
+
+    .glass-bento {
+      background: linear-gradient(145deg, rgba(20, 14, 44, 0.82), rgba(10, 7, 24, 0.72));
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .neon-text {
+      background: linear-gradient(95deg, #00f5d4 0%, #38bdf8 35%, #c084fc 70%, #ff00a8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .btn-neon {
+      background: linear-gradient(135deg, #00f5d4 0%, #7b2cbf 52%, #ff00a8 100%);
+      border: none;
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: transform 0.22s ease, box-shadow 0.25s ease, filter 0.22s ease;
+    }
+    .btn-neon:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 0 26px rgba(0, 245, 212, 0.45), 0 0 38px rgba(255, 0, 168, 0.32);
+      filter: brightness(1.09);
+      color: #ffffff;
+    }
+    .btn-neon:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+
+    /* ==================== RAIL LATERAL & DOCK MÓVIL ==================== */
+    .nav-rail {
+      background: rgba(11, 8, 26, 0.84);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(0, 245, 212, 0.18);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6), inset 0 0 24px rgba(123, 44, 191, 0.12);
+    }
+
+    .rail-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      width: 64px;
+      height: 60px;
+      border-radius: 1rem;
+      color: #94a3b8;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+    }
+    .rail-item:hover {
+      color: #f8fafc;
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.12);
+      transform: translateY(-1px);
+    }
+    .rail-item.active {
+      color: #00f5d4;
+      background: linear-gradient(145deg, rgba(0, 245, 212, 0.16), rgba(123, 44, 191, 0.22));
+      border-color: rgba(0, 245, 212, 0.45);
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.2);
+    }
+
+    .mobile-dock {
+      background: rgba(10, 7, 24, 0.9);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(0, 245, 212, 0.24);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75);
+    }
+
+    /* ==================== CHIPS, BUSCADOR Y ORDENAMIENTO ==================== */
+    .chip-cat {
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      border-radius: 9999px;
+      padding: 0.5rem 1.05rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: all 0.22s ease;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .chip-cat:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(0, 245, 212, 0.4);
+    }
+    .chip-cat.active {
+      background: linear-gradient(135deg, rgba(0, 245, 212, 0.22), rgba(255, 0, 168, 0.22));
+      border-color: var(--nv-cyan);
+      color: #ffffff;
+      box-shadow: 0 0 18px rgba(0, 245, 212, 0.25);
+    }
+
+    .sort-pill {
+      background: rgba(15, 10, 34, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.45rem 0.9rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .sort-pill:hover {
+      color: #f8fafc;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .sort-pill.active {
+      background: rgba(255, 0, 168, 0.2);
+      border-color: rgba(255, 0, 168, 0.65);
+      color: #fbcfe8;
+      box-shadow: 0 0 15px rgba(255, 0, 168, 0.2);
+    }
+
+    /* ==================== TARJETAS DE PRODUCTO FUTURISTAS ==================== */
+    .card-vape {
+      background: linear-gradient(165deg, rgba(21, 15, 44, 0.84) 0%, rgba(10, 7, 23, 0.92) 100%);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.5rem;
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.32s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-vape::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 85% 10%, rgba(0, 245, 212, 0.14), transparent 45%);
+      opacity: 0;
+      transition: opacity 0.32s ease;
+      pointer-events: none;
+    }
+    .card-vape:hover {
+      transform: translateY(-7px);
+      border-color: rgba(0, 245, 212, 0.58);
+      box-shadow: 0 22px 44px -12px rgba(0, 245, 212, 0.24), 0 0 28px rgba(255, 0, 168, 0.16);
+    }
+    .card-vape:hover::before {
+      opacity: 1;
+    }
+
+    .img-vape-wrap {
+      background: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.97) 0%, rgba(229, 236, 255, 0.9) 70%, rgba(208, 218, 248, 0.85) 100%);
+      height: 205px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .img-vape {
+      max-height: 168px;
+      width: 100%;
+      object-fit: contain;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      filter: drop-shadow(0 12px 16px rgba(15, 23, 42, 0.18));
+    }
+    .card-vape:hover .img-vape {
+      transform: scale(1.07) translateY(-3px);
+    }
+
+    /* ==================== INPUTS & MODAL CYBER ==================== */
+    .form-control-cyber, .form-select-cyber {
+      background-color: rgba(9, 6, 22, 0.88) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      color: #f8fafc !important;
+      border-radius: 0.9rem !important;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-control-cyber:focus, .form-select-cyber:focus {
+      border-color: var(--nv-cyan) !important;
+      box-shadow: 0 0 0 0.2rem rgba(0, 245, 212, 0.18) !important;
+      outline: none;
+    }
+    .form-control-cyber::placeholder {
+      color: #64748b;
+    }
+
+    .modal-cyber .modal-content {
+      background: rgba(10, 7, 25, 0.96);
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      color: #f4f4ff;
+      border: 1px solid rgba(0, 245, 212, 0.28);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(123, 44, 191, 0.22);
+    }
+
+    /* Scrollbar sutil */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 245, 212, 0.3);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 245, 212, 0.55);
+    }
+  </style>
+</head>
+<body class="pb-24 md:pb-8">
+
+  <!-- Capas Abstractas de Fondo -->
+  <div class="cyber-mesh"></div>
+  <div class="cyber-vignette"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- ==================== RAIL LATERAL IZQUIERDO FIJO (ESCRITORIO) ==================== -->
+  <aside class="nav-rail hidden md:flex fixed left-4 top-4 bottom-4 w-20 rounded-3xl z-40 flex-col items-center justify-between py-5 px-2">
+    <!-- Emblema NEONVAPE -->
+    <a href="#bento-hero" class="flex flex-col items-center gap-1.5 no-underline group" title="NEONVAPE Cloud Lab">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-400 via-fuchsia-500 to-violet-600 flex items-center justify-center text-slate-950 shadow-lg shadow-cyan-500/30 group-hover:scale-105 transition">
+        <i class="bi bi-stars text-2xl"></i>
+      </div>
+      <span class="text-[9px] font-display font-extrabold tracking-[0.2em] neon-text">NEON</span>
+    </a>
+
+    <!-- Navegación Principal -->
+    <nav class="flex flex-col items-center gap-3">
+      <a href="#catalogo-section" id="rail-explorar" onclick="setRailActive('rail-explorar')" class="rail-item active" title="Explorar catálogo">
+        <i class="bi bi-compass-fill text-xl"></i>
+        <span class="text-[10px] font-semibold tracking-wide">Explorar</span>
+      </a>
+
+      <a href="#bento-hero" id="rail-destacados" onclick="enfocarDestacados()" class="rail-item" title="Producto destacado">
+        <i class="bi bi-lightning-charge-fill text-xl"></i>
+        <span class="text-[10px] font-semibold tracking-wide">Top Drop</span>
+      </a>
+
+      <button type="button" onclick="abrirModalCarrito()" class="rail-item" title="Abrir bolsa de compra">
+        <div class="relative">
+          <i class="bi bi-bag-heart-fill text-xl"></i>
+          <span id="contador-carrito" class="absolute -top-2 -right-3 min-w-[20px] h-5 px-1 rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-slate-950 text-[10px] font-extrabold flex items-center justify-center shadow-md">0</span>
+        </div>
+        <span class="text-[10px] font-semibold tracking-wide">Bolsa</span>
+      </button>
+    </nav>
+
+    <!-- Acceso Admin -->
+    <div class="flex flex-col items-center gap-2">
+      <a href="admin.html" class="rail-item text-fuchsia-300/80 hover:text-fuchsia-200" title="Panel de Administración">
+        <i class="bi bi-cpu-fill text-xl"></i>
+        <span class="text-[10px] font-semibold tracking-wide">Admin</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ==================== DOCK FLOTANTE INFERIOR (MÓVIL) ==================== -->
+  <nav class="mobile-dock md:hidden fixed bottom-3 left-3 right-3 rounded-2xl z-40 px-3 py-2 flex items-center justify-around">
+    <a href="#catalogo-section" onclick="setRailActive('rail-explorar')" class="flex flex-col items-center gap-0.5 text-cyan-300 no-underline text-xs font-semibold px-3 py-1">
+      <i class="bi bi-compass-fill text-lg"></i>
+      <span class="text-[10px]">Explorar</span>
+    </a>
+    <a href="#bento-hero" onclick="enfocarDestacados()" class="flex flex-col items-center gap-0.5 text-slate-300 hover:text-white no-underline text-xs font-semibold px-3 py-1">
+      <i class="bi bi-lightning-charge-fill text-lg"></i>
+      <span class="text-[10px]">Destacados</span>
+    </a>
+    <button type="button" onclick="abrirModalCarrito()" class="relative flex flex-col items-center gap-0.5 text-white bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 border border-cyan-400/40 rounded-xl px-4 py-1">
+      <div class="relative">
+        <i class="bi bi-bag-heart-fill text-lg text-cyan-300"></i>
+        <span id="contador-carrito-mobile" class="absolute -top-1.5 -right-3 min-w-[18px] h-[18px] px-1 rounded-full bg-fuchsia-500 text-white text-[10px] font-extrabold flex items-center justify-center">0</span>
+      </div>
+      <span class="text-[10px] font-semibold">Bolsa</span>
+    </button>
+    <a href="admin.html" class="flex flex-col items-center gap-0.5 text-slate-300 hover:text-fuchsia-300 no-underline text-xs font-semibold px-3 py-1">
+      <i class="bi bi-cpu-fill text-lg"></i>
+      <span class="text-[10px]">Admin</span>
+    </a>
+  </nav>
+
+  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+  <main class="relative z-10 md:pl-28 pr-4 pl-4 md:pr-8 pt-6 md:pt-8 max-w-[1440px] mx-auto">
+
+    <!-- HERO BANNER TIPO BENTO ASIMÉTRICO -->
+    <section id="bento-hero" class="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-10">
+
+      <!-- Bloque Principal Izquierdo (7 cols): Producto Destacado Dinámico -->
+      <div id="hero-destacado" class="lg:col-span-7 glass-bento rounded-[2rem] p-6 md:p-8 relative overflow-hidden flex flex-col justify-between min-h-[340px]">
+        <!-- Se llena dinámicamente con JS -->
+        <div class="flex flex-col justify-center items-center h-full py-12 text-slate-400">
+          <div class="spinner-border text-info mb-3" role="status"></div>
+          <p class="text-sm tracking-widest uppercase">Sincronizando frecuencia NEONVAPE...</p>
+        </div>
+      </div>
+
+      <!-- Bloque Derecho Asimétrico (5 cols): Telemetría + Mini Tarjetas Bento -->
+      <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
+
+        <!-- Tarjeta Superior: Identidad Cloud Lab -->
+        <div class="glass-bento rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-cyan-300 bg-cyan-400/10 border border-cyan-400/30 px-3 py-1 rounded-full">
+              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+              CLOUD LAB // V2.0
+            </span>
+            <span class="text-xs text-slate-400 font-medium">Stock en tiempo real</span>
+          </div>
+
+          <div>
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-2 leading-none">
+              NEON<span class="neon-text">VAPE</span>
+            </h1>
+            <p class="text-slate-300 text-sm m-0 leading-relaxed">
+              Hardware de nueva generación, pods eufóricos y sabores de alta pureza. Explora el catálogo o arma tu cápsula de compra al instante.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2.5 mt-5 pt-4 border-t border-white/10">
+            <div class="bg-white/5 rounded-2xl p-2.5 text-center border border-white/5">
+              <p class="text-[10px] uppercase tracking-wider text-slate-400 m-0">Modelos</p>
+              <p id="stat-modelos" class="text-lg font-extrabold font-display text-white m-0">--</p>
+            </div>
+            <div class="bg-white/5 rounded-2xl p-2.5 text-center border border-white/5">
+              <p class="text-[10px] uppercase tracking-wider text-slate-400 m-0">Disponibles</p>
+              <p id="stat-disponibles" class="text-lg font-extrabold font-display text-cyan-300 m-0">--</p>
+            </div>
+            <div class="bg-white/5 rounded-2xl p-2.5 text-center border border-white/5">
+              <p class="text-[10px] uppercase tracking-wider text-slate-400 m-0">Categorías</p>
+              <p id="stat-categorias" class="text-lg font-extrabold font-display text-fuchsia-400 m-0">--</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila Inferior Asimétrica: Acceso Rápido a Bolsa + Filtro Express -->
+        <div class="grid grid-cols-2 gap-4">
+          <button type="button" onclick="abrirModalCarrito()" class="glass-bento rounded-3xl p-4 text-left hover:border-cyan-400/50 transition group cursor-pointer flex flex-col justify-between">
+            <div class="flex items-center justify-between w-full mb-2">
+              <span class="w-9 h-9 rounded-xl bg-cyan-400/15 text-cyan-300 flex items-center justify-center border border-cyan-400/30">
+                <i class="bi bi-bag-check-fill"></i>
+              </span>
+              <i class="bi bi-arrow-up-right text-slate-400 group-hover:text-cyan-300 transition"></i>
+            </div>
+            <div>
+              <p class="text-[11px] uppercase tracking-wider text-slate-400 m-0">Tu Bolsa</p>
+              <p id="bento-total-bolsa" class="text-lg font-extrabold font-display neon-text m-0">$0.00</p>
+            </div>
+          </button>
+
+          <button type="button" onclick="cambiarOrden('precio_asc'); document.getElementById('catalogo-section').scrollIntoView({behavior:'smooth'})" class="glass-bento rounded-3xl p-4 text-left hover:border-fuchsia-400/50 transition group cursor-pointer flex flex-col justify-between">
+            <div class="flex items-center justify-between w-full mb-2">
+              <span class="w-9 h-9 rounded-xl bg-fuchsia-500/15 text-fuchsia-300 flex items-center justify-center border border-fuchsia-400/30">
+                <i class="bi bi-sliders2-vertical"></i>
+              </span>
+              <i class="bi bi-arrow-down-right text-slate-400 group-hover:text-fuchsia-300 transition"></i>
+            </div>
+            <div>
+              <p class="text-[11px] uppercase tracking-wider text-slate-400 m-0">Mejor Precio</p>
+              <p class="text-sm font-bold text-white m-0">Ordenar ahora</p>
+            </div>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== BARRA DE EXPLORACIÓN: CHIPS + BUSCADOR + ORDEN ==================== -->
+    <section id="catalogo-section" class="mb-8">
+      <div class="glass-panel rounded-3xl p-4 md:p-5 border border-white/10 space-y-4">
+
+        <!-- Fila superior: Buscador en tiempo real + Botones de ordenamiento -->
+        <div class="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-3">
+          <div class="relative flex-grow max-w-xl">
+            <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-cyan-400"></i>
+            <input
+              type="text"
+              id="buscador-productos"
+              oninput="filtrarProductos()"
+              class="form-control form-control-cyber pl-11 pr-10 py-2.5 text-sm w-full"
+              placeholder="Buscar por marca o modelo (ej: Geek Bar, Vaporesso, Elf)..."
+            >
+            <button
+              type="button"
+              id="btn-limpiar-busqueda"
+              onclick="limpiarBusqueda()"
+              class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-transparent border-0"
+              title="Limpiar búsqueda"
+            >
+              <i class="bi bi-x-circle-fill"></i>
+            </button>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-[11px] uppercase tracking-widest text-slate-400 font-bold me-1">Orden:</span>
+            <button type="button" data-sort="todos" onclick="cambiarOrden('todos')" class="sort-pill active">
+              <i class="bi bi-grid-fill me-1"></i> Todos
+            </button>
+            <button type="button" data-sort="precio_asc" onclick="cambiarOrden('precio_asc')" class="sort-pill">
+              <i class="bi bi-sort-numeric-down me-1"></i> Menor precio
+            </button>
+            <button type="button" data-sort="precio_desc" onclick="cambiarOrden('precio_desc')" class="sort-pill">
+              <i class="bi bi-sort-numeric-up-alt me-1"></i> Mayor precio
+            </button>
+          </div>
+        </div>
+
+        <!-- Fila inferior: Barra horizontal de píldoras/chips de categorías -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1" id="chips-categorias">
+          <button type="button" onclick="seleccionarCategoria('todas')" class="chip-cat active">
+            Todas las categorías
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== GRILLA MODERNA DE TARJETAS FUTURISTAS ==================== -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-5 px-1">
+        <h2 class="text-xl md:text-2xl font-extrabold font-display m-0 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500"></span>
+          Catálogo de Dispositivos
+        </h2>
+        <span id="contador-resultados" class="text-xs font-semibold text-slate-400 bg-white/5 px-3 py-1 rounded-full border border-white/10">
+          Cargando...
+        </span>
+      </div>
+
+      <div id="grid-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Se llena dinámicamente con JS -->
+      </div>
+    </section>
+
+    <footer class="glass-panel rounded-2xl text-slate-400 text-center py-4 mb-4 text-xs tracking-widest uppercase border border-white/10">
+      NEONVAPE CLOUD LAB · Solo para mayores de edad · Sincronizado con MockAPI
+    </footer>
+  </main>
+
+  <!-- ==================== MODAL / DRAWER DE CARRITO Y CHECKOUT EN 2 COLUMNAS ==================== -->
+  <div class="modal fade modal-cyber" id="modalCarrito" tabindex="-1" aria-labelledby="modalCarritoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content rounded-[2rem] overflow-hidden">
+        <div class="modal-header border-b border-white/10 px-6 py-4" style="background: linear-gradient(120deg, rgba(0,245,212,0.12), rgba(123,44,191,0.16), rgba(255,0,168,0.12));">
+          <h5 class="modal-title font-display font-bold flex items-center gap-2.5 text-lg md:text-xl m-0" id="modalCarritoLabel">
+            <span class="w-9 h-9 rounded-xl bg-cyan-400/20 border border-cyan-400/40 text-cyan-300 flex items-center justify-center">
+              <i class="bi bi-bag-heart-fill"></i>
+            </span>
+            Cápsula de Compra & Checkout
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body p-5 md:p-6">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- COLUMNA IZQUIERDA: Ítems del carrito con controles +/-/quitar -->
+            <div class="lg:col-span-7 flex flex-col">
+              <div class="flex items-center justify-between mb-3">
+                <h6 class="font-display font-bold text-sm uppercase tracking-widest text-cyan-300 m-0">
+                  Dispositivos Seleccionados
+                </h6>
+                <span id="modal-resumen-unidades" class="text-xs text-slate-400 font-semibold">0 unidades</span>
+              </div>
+
+              <div id="items-carrito" class="space-y-3 overflow-y-auto max-h-[380px] pr-1 flex-grow">
+                <!-- Se llena con JS -->
+              </div>
+            </div>
+
+            <!-- COLUMNA DERECHA: Formulario de compra y total -->
+            <div class="lg:col-span-5">
+              <div class="glass-panel rounded-3xl p-5 border border-white/15">
+                <div class="flex justify-between items-center pb-3 mb-4 border-b border-white/10">
+                  <span class="text-slate-300 text-xs uppercase tracking-widest font-bold">Total a pagar</span>
+                  <span id="total-carrito" class="text-3xl font-extrabold neon-text font-display">$0.00</span>
+                </div>
+
+                <form id="form-compra" onsubmit="confirmarCompra(event)" class="space-y-3">
+                  <div>
+                    <label for="cliente-nombre" class="form-label text-xs font-semibold text-slate-300 mb-1">Nombre completo</label>
+                    <input type="text" id="cliente-nombre" class="form-control form-control-sm form-control-cyber py-2" placeholder="Ej: Valeria Rojas" required>
+                  </div>
+
+                  <div>
+                    <label for="cliente-telefono" class="form-label text-xs font-semibold text-slate-300 mb-1">Teléfono / WhatsApp</label>
+                    <input type="tel" id="cliente-telefono" class="form-control form-control-sm form-control-cyber py-2" placeholder="Ej: 70012345" required>
+                  </div>
+
+                  <div>
+                    <label for="cliente-direccion" class="form-label text-xs font-semibold text-slate-300 mb-1">Dirección de entrega</label>
+                    <input type="text" id="cliente-direccion" class="form-control form-control-sm form-control-cyber py-2" placeholder="Ej: Av. América #450" required>
+                  </div>
+
+                  <div>
+                    <label for="cliente-pago" class="form-label text-xs font-semibold text-slate-300 mb-1">Método de pago</label>
+                    <select id="cliente-pago" class="form-select form-select-sm form-select-cyber py-2" required>
+                      <option value="Efectivo contra entrega">Efectivo contra entrega</option>
+                      <option value="Transferencia / QR">Transferencia / QR</option>
+                      <option value="Tarjeta">Tarjeta</option>
+                    </select>
+                  </div>
+
+                  <button type="submit" id="btn-comprar" class="btn btn-neon w-full py-2.5 rounded-xl mt-2">
+                    <i class="bi bi-rocket-takeoff-fill me-1"></i> Finalizar Compra
+                  </button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL COMPROBANTE DE COMPRA ==================== -->
+  <div class="modal fade modal-cyber" id="modalComprobante" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-3xl overflow-hidden shadow-2xl">
+        <div class="modal-header border-b border-white/10" style="background: linear-gradient(135deg, rgba(0,245,212,0.22), rgba(255,0,168,0.22));">
+          <h5 class="modal-title font-display font-bold text-white">
+            <i class="bi bi-check2-circle text-cyan-300 me-2"></i> ¡Orden Confirmada!
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div id="detalle-comprobante" class="modal-body text-slate-200 space-y-2">
+          <!-- Contenido dinámico -->
+        </div>
+        <div class="modal-footer border-t border-white/10">
+          <button type="button" class="btn btn-neon px-5 rounded-full" data-bs-dismiss="modal">Listo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor de Notificaciones Toast -->
+  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-xs w-full"></div>
+
+  <!-- Bootstrap 5.3.2 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- ==================== LÓGICA JAVASCRIPT ==================== -->
+  <script>
+    const API_URL = 'https://6b00fc4c1c637a569e52b6c0.mockapi.io';
+
+    let listaCategorias = [];
+    let listaProductos = [];
+    let categoriaActiva = 'todas';
+    let ordenActivo = 'todos';
+    let carrito = [];
+
+    try {
+      carrito = JSON.parse(localStorage.getItem('neonvape_carrito')) || [];
+    } catch (e) {
+      carrito = [];
+    }
+
+    function esc(texto) {
+      return String(texto ?? '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[c]));
+    }
+
+    function mostrarToast(mensaje, tipo = 'info') {
+      const container = document.getElementById('toast-container');
+      const colores = {
+        info: 'border-cyan-400/50 text-cyan-200',
+        success: 'border-emerald-400/50 text-emerald-200',
+        warn: 'border-amber-400/60 text-amber-200',
+        error: 'border-rose-500/60 text-rose-200'
+      };
+      const iconos = {
+        info: 'bi-lightning-charge-fill text-cyan-400',
+        success: 'bi-check-circle-fill text-emerald-400',
+        warn: 'bi-exclamation-triangle-fill text-amber-400',
+        error: 'bi-x-octagon-fill text-rose-400'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `glass-panel px-4 py-3 rounded-2xl text-xs font-semibold flex items-center gap-2.5 shadow-2xl border pointer-events-auto transition-all duration-300 ${colores[tipo] || colores.info}`;
+      toast.innerHTML = `<i class="bi ${iconos[tipo] || iconos.info} text-base"></i><span>${esc(mensaje)}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(16px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarDatosIniciales();
+      renderizarCarrito();
+    });
+
+    function setRailActive(idActivo) {
+      document.querySelectorAll('.rail-item').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById(idActivo);
+      if (target) target.classList.add('active');
+    }
+
+    function enfocarDestacados() {
+      setRailActive('rail-destacados');
+      const hero = document.getElementById('bento-hero');
+      if (hero) hero.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function abrirModalCarrito() {
+      const modalEl = document.getElementById('modalCarrito');
+      const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+      modal.show();
+    }
+
+    async function cargarDatosIniciales() {
+      try {
+        const [resCat, resProd] = await Promise.all([
+          fetch(`${API_URL}/categorias`),
+          fetch(`${API_URL}/productos`)
+        ]);
+
+        if (!resCat.ok || !resProd.ok) {
+          throw new Error(`HTTP ${resCat.status} / ${resProd.status}`);
+        }
+
+        listaCategorias = await resCat.json();
+        listaProductos = await resProd.json();
+
+        actualizarEstadisticasBento();
+        renderizarHeroDestacado();
+        renderizarChipsCategorias();
+        filtrarProductos();
+      } catch (error) {
+        console.error('Error al conectar con MockAPI:', error);
+        mostrarToast('Error al cargar datos desde MockAPI. Verifica los recursos "categorias" y "productos".', 'error');
+        document.getElementById('grid-productos').innerHTML = `
+          <div class="col-span-full glass-panel rounded-3xl p-10 text-center text-rose-300 border border-rose-500/30">
+            <i class="bi bi-wifi-off text-4xl block mb-2"></i>
+            No se pudo conectar con MockAPI en este momento.
+          </div>
+        `;
+      }
+    }
+
+    function obtenerNombreCategoria(categoriaId) {
+      const cat = listaCategorias.find(c => String(c.id) === String(categoriaId));
+      return cat ? cat.nombre : 'Sin categoría';
+    }
+
+    function obtenerStockProducto(prod) {
+      if (prod && prod.stock !== undefined && prod.stock !== '' && !Number.isNaN(Number(prod.stock))) {
+        return Math.max(0, parseInt(prod.stock, 10));
+      }
+      return 10;
+    }
+
+    function actualizarEstadisticasBento() {
+      const disponibles = listaProductos.filter(p => obtenerStockProducto(p) > 0).length;
+      document.getElementById('stat-modelos').innerText = listaProductos.length;
+      document.getElementById('stat-disponibles').innerText = disponibles;
+      document.getElementById('stat-categorias').innerText = listaCategorias.length;
+    }
+
+    function renderizarHeroDestacado() {
+      const hero = document.getElementById('hero-destacado');
+      if (!listaProductos.length) {
+        hero.innerHTML = `
+          <div class="flex flex-col justify-center items-start h-full py-6">
+            <span class="text-xs font-bold uppercase tracking-[0.25em] text-fuchsia-300 mb-2">// SIN PRODUCTOS</span>
+            <h2 class="text-3xl font-extrabold font-display text-white mb-2">Catálogo en preparación</h2>
+            <p class="text-slate-300 text-sm">Agrega dispositivos desde el Panel Admin para ver el destacado aquí.</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Elegir producto destacado dinámico: el de mayor precio con stock disponible (o el primero)
+      const conStock = listaProductos.filter(p => obtenerStockProducto(p) > 0);
+      const candidatos = conStock.length > 0 ? conStock : listaProductos;
+      const destacado = [...candidatos].sort((a, b) => (Number(b.precio) || 0) - (Number(a.precio) || 0))[0];
+
+      const catNombre = obtenerNombreCategoria(destacado.categoriaId);
+      const stockVal = obtenerStockProducto(destacado);
+      const agotado = stockVal <= 0;
+      const precioNum = Number(destacado.precio);
+      const precioTxt = Number.isNaN(precioNum) ? 'N/D' : `$${precioNum.toFixed(2)}`;
+
+      hero.innerHTML = `
+        <div class="absolute -right-12 -top-12 w-56 h-56 rounded-full bg-cyan-400/15 blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-10 -bottom-12 w-56 h-56 rounded-full bg-fuchsia-500/15 blur-3xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center h-full relative z-10">
+          <div class="md:col-span-7 flex flex-col justify-between gap-4">
+            <div>
+              <div class="flex flex-wrap items-center gap-2 mb-3">
+                <span class="text-[11px] font-bold uppercase tracking-[0.22em] text-fuchsia-300 bg-fuchsia-500/15 border border-fuchsia-400/40 px-3 py-1 rounded-full">
+                  <i class="bi bi-stars me-1"></i> Destacado del Día
+                </span>
+                <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-white/10 text-cyan-300 border border-cyan-400/30">
+                  ${esc(catNombre)}
+                </span>
+              </div>
+
+              <p class="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300 mb-1">${esc(destacado.marca)}</p>
+              <h2 class="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight mb-3">
+                ${esc(destacado.modelo)}
+              </h2>
+              <p class="text-xs font-semibold ${agotado ? 'text-rose-400' : 'text-emerald-300'} mb-0">
+                ${agotado ? '// SIN STOCK DISPONIBLE' : `// DISPONIBLE: ${stockVal} UNIDADES LISTAS`}
+              </p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <span class="text-3xl md:text-4xl font-extrabold font-display neon-text">${precioTxt}</span>
+              <button
+                type="button"
+                onclick="agregarAlCarrito('${esc(destacado.id)}')"
+                ${agotado ? 'disabled' : ''}
+                class="btn btn-neon rounded-full px-5 py-2.5 text-sm flex items-center gap-2"
+              >
+                <i class="bi bi-bag-plus-fill"></i>
+                ${agotado ? 'Agotado' : 'Agregar al Carrito'}
+              </button>
+            </div>
+          </div>
+
+          <div class="md:col-span-5 flex items-center justify-center">
+            <div class="w-full max-w-[240px] aspect-square rounded-3xl bg-gradient-to-br from-white/95 to-indigo-100/90 p-5 flex items-center justify-center shadow-2xl border border-white/40 relative">
+              <img
+                src="${esc(destacado.imagen)}"
+                alt="${esc(destacado.modelo)}"
+                class="max-h-44 w-full object-contain drop-shadow-xl"
+                onerror="this.src='https://via.placeholder.com/300x300?text=NEONVAPE'"
+              >
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderizarChipsCategorias() {
+      const contenedor = document.getElementById('chips-categorias');
+      contenedor.innerHTML = `
+        <button type="button" onclick="seleccionarCategoria('todas')" class="chip-cat ${categoriaActiva === 'todas' ? 'active' : ''}">
+          Todas (${listaProductos.length})
+        </button>
+      `;
+
+      listaCategorias.forEach(cat => {
+        const count = listaProductos.filter(p => String(p.categoriaId) === String(cat.id)).length;
+        const activa = String(categoriaActiva) === String(cat.id);
+        contenedor.innerHTML += `
+          <button type="button" onclick="seleccionarCategoria('${esc(cat.id)}')" class="chip-cat ${activa ? 'active' : ''}">
+            ${esc(cat.nombre)} <span class="opacity-65 ml-1">(${count})</span>
+          </button>
+        `;
+      });
+    }
+
+    function seleccionarCategoria(catId) {
+      categoriaActiva = catId;
+      renderizarChipsCategorias();
+      filtrarProductos();
+    }
+
+    function cambiarOrden(nuevoOrden) {
+      ordenActivo = nuevoOrden;
+      document.querySelectorAll('.sort-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.sort === nuevoOrden);
+      });
+      filtrarProductos();
+    }
+
+    function limpiarBusqueda() {
+      const input = document.getElementById('buscador-productos');
+      input.value = '';
+      filtrarProductos();
+      input.focus();
+    }
+
+    function filtrarProductos() {
+      const inputBuscador = document.getElementById('buscador-productos');
+      const btnLimpiar = document.getElementById('btn-limpiar-busqueda');
+      const query = (inputBuscador?.value || '').trim().toLowerCase();
+
+      if (btnLimpiar) {
+        btnLimpiar.classList.toggle('hidden', query.length === 0);
+      }
+
+      let resultado = listaProductos.filter(prod => {
+        const coincideCat = categoriaActiva === 'todas' || String(prod.categoriaId) === String(categoriaActiva);
+        if (!coincideCat) return false;
+        if (!query) return true;
+        const marca = String(prod.marca || '').toLowerCase();
+        const modelo = String(prod.modelo || '').toLowerCase();
+        return marca.includes(query) || modelo.includes(query);
+      });
+
+      if (ordenActivo === 'precio_asc') {
+        resultado = [...resultado].sort((a, b) => (Number(a.precio) || 0) - (Number(b.precio) || 0));
+      } else if (ordenActivo === 'precio_desc') {
+        resultado = [...resultado].sort((a, b) => (Number(b.precio) || 0) - (Number(a.precio) || 0));
+      }
+
+      renderizarCatalogo(resultado);
+    }
+
+    function renderizarCatalogo(productos) {
+      const grid = document.getElementById('grid-productos');
+      const contador = document.getElementById('contador-resultados');
+      contador.innerText = `${productos.length} ${productos.length === 1 ? 'dispositivo' : 'dispositivos'}`;
+
+      grid.innerHTML = '';
+
+      if (productos.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full glass-panel rounded-3xl p-12 text-center border border-white/10">
+            <i class="bi bi-search text-4xl text-cyan-400/70 block mb-3"></i>
+            <p class="text-slate-300 font-semibold mb-3">No se encontraron vapes con esos filtros.</p>
+            <button type="button" onclick="categoriaActiva='todas'; cambiarOrden('todos'); limpiarBusqueda(); renderizarChipsCategorias();" class="btn btn-sm btn-neon rounded-full px-4 py-2">
+              Restablecer filtros
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      productos.forEach(prod => {
+        const nombreCategoria = obtenerNombreCategoria(prod.categoriaId);
+        const precioNum = Number(prod.precio);
+        const precioTexto = Number.isNaN(precioNum) ? 'N/D' : `$${precioNum.toFixed(2)}`;
+        const stockValor = obtenerStockProducto(prod);
+        const agotado = stockValor <= 0;
+
+        grid.innerHTML += `
+          <article class="card-vape flex flex-col">
+            <div class="img-vape-wrap">
+              <img src="${esc(prod.imagen)}" alt="${esc(prod.modelo)}" class="img-vape" onerror="this.src='https://via.placeholder.com/300x300?text=NEONVAPE'">
+              <span class="absolute top-3 right-3 text-[11px] font-bold px-3 py-1 rounded-full bg-slate-950/85 text-cyan-300 border border-cyan-400/40 backdrop-blur-md">
+                ${esc(nombreCategoria)}
+              </span>
+              <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-full ${agotado ? 'bg-rose-950/90 text-rose-300 border border-rose-400/40' : 'bg-slate-950/80 text-emerald-300 border border-emerald-400/35'} backdrop-blur-md">
+                ${agotado ? 'AGOTADO' : `${stockValor} UND`}
+              </span>
+            </div>
+            <div class="p-5 flex-grow flex flex-col justify-between">
+              <div>
+                <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-fuchsia-400 mb-1">${esc(prod.marca)}</p>
+                <h3 class="text-lg font-bold text-white mb-1 leading-snug">${esc(prod.modelo)}</h3>
+              </div>
+              <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center gap-2">
+                <span class="text-2xl font-extrabold font-display neon-text">${precioTexto}</span>
+                <button type="button" onclick="agregarAlCarrito('${esc(prod.id)}')" ${agotado ? 'disabled' : ''} class="btn btn-sm btn-neon rounded-full px-4 py-2">
+                  <i class="bi bi-plus-lg me-1"></i> ${agotado ? 'Sin stock' : 'Agregar'}
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      });
+    }
+
+    function guardarCarritoLocal() {
+      try {
+        localStorage.setItem('neonvape_carrito', JSON.stringify(carrito));
+      } catch (e) {
+        console.warn('No se pudo guardar en localStorage:', e);
+      }
+    }
+
+    function agregarAlCarrito(idProducto) {
+      const producto = listaProductos.find(p => String(p.id) === String(idProducto));
+      if (!producto) return;
+
+      const stockDisponible = obtenerStockProducto(producto);
+      if (stockDisponible <= 0) {
+        mostrarToast('Este dispositivo está agotado.', 'warn');
+        return;
+      }
+
+      const existente = carrito.find(item => String(item.id) === String(idProducto));
+      const cantidadActual = existente ? existente.cantidad : 0;
+
+      if (cantidadActual + 1 > stockDisponible) {
+        mostrarToast(`Solo hay ${stockDisponible} unidad(es) disponible(s) en stock.`, 'warn');
+        return;
+      }
+
+      if (existente) {
+        existente.cantidad += 1;
+      } else {
+        carrito.push({
+          id: producto.id,
+          marca: producto.marca,
+          modelo: producto.modelo,
+          precio: Number(producto.precio) || 0,
+          imagen: producto.imagen,
+          cantidad: 1
+        });
+      }
+
+      guardarCarritoLocal();
+      renderizarCarrito();
+      abrirModalCarrito();
+    }
+
+    function cambiarCantidad(idProducto, delta) {
+      const item = carrito.find(i => String(i.id) === String(idProducto));
+      const producto = listaProductos.find(p => String(p.id) === String(idProducto));
+      if (!item) return;
+
+      const stockDisponible = producto ? obtenerStockProducto(producto) : item.cantidad;
+      const nuevaCantidad = item.cantidad + delta;
+
+      if (delta > 0 && nuevaCantidad > stockDisponible) {
+        mostrarToast(`Solo hay ${stockDisponible} unidad(es) disponible(s) en stock.`, 'warn');
+        return;
+      }
+
+      item.cantidad = nuevaCantidad;
+      if (item.cantidad <= 0) {
+        carrito = carrito.filter(i => String(i.id) !== String(idProducto));
+      }
+
+      guardarCarritoLocal();
+      renderizarCarrito();
+    }
+
+    function quitarDelCarrito(idProducto) {
+      carrito = carrito.filter(i => String(i.id) !== String(idProducto));
+      guardarCarritoLocal();
+      renderizarCarrito();
+    }
+
+    function renderizarCarrito() {
+      const contenedor = document.getElementById('items-carrito');
+      const contador = document.getElementById('contador-carrito');
+      const contadorMobile = document.getElementById('contador-carrito-mobile');
+      const resumenUnidades = document.getElementById('modal-resumen-unidades');
+      const bentoTotal = document.getElementById('bento-total-bolsa');
+      const totalEl = document.getElementById('total-carrito');
+      const btnComprar = document.getElementById('btn-comprar');
+
+      const totalUnidades = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+      const totalPrecio = carrito.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+      const precioFmt = `$${totalPrecio.toFixed(2)}`;
+
+      if (contador) contador.innerText = totalUnidades;
+      if (contadorMobile) contadorMobile.innerText = totalUnidades;
+      if (resumenUnidades) resumenUnidades.innerText = `${totalUnidades} ${totalUnidades === 1 ? 'unidad' : 'unidades'}`;
+      if (bentoTotal) bentoTotal.innerText = precioFmt;
+      if (totalEl) totalEl.innerText = precioFmt;
+      if (btnComprar) btnComprar.disabled = carrito.length === 0;
+
+      if (carrito.length === 0) {
+        contenedor.innerHTML = `
+          <div class="glass-panel rounded-2xl text-center text-slate-400 py-12 px-4 border border-white/10">
+            <i class="bi bi-wind text-4xl block mb-2 text-cyan-400/60"></i>
+            Tu cápsula está vacía. Agrega algún vape del catálogo para comenzar.
+          </div>
+        `;
+        return;
+      }
+
+      contenedor.innerHTML = '';
+      carrito.forEach(item => {
+        contenedor.innerHTML += `
+          <div class="glass-panel p-3.5 rounded-2xl flex items-center gap-3 border border-white/10">
+            <img src="${esc(item.imagen)}" alt="${esc(item.modelo)}" class="w-16 h-16 object-contain rounded-xl bg-white p-1.5 shrink-0" onerror="this.src='https://via.placeholder.com/60'">
+            <div class="flex-grow min-w-0">
+              <p class="text-[10px] text-fuchsia-400 font-bold uppercase tracking-widest m-0">${esc(item.marca)}</p>
+              <h6 class="font-bold text-white truncate m-0 text-sm">${esc(item.modelo)}</h6>
+              <span class="text-xs text-slate-400">$${Number(item.precio).toFixed(2)} c/u · </span>
+              <span class="text-sm font-bold text-cyan-300">$${(item.precio * item.cantidad).toFixed(2)}</span>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+              <button type="button" onclick="cambiarCantidad('${esc(item.id)}', -1)" class="btn btn-sm btn-outline-light border-white/20 py-0.5 px-2.5 rounded-lg">-</button>
+              <span class="px-2 font-bold text-sm text-white">${item.cantidad}</span>
+              <button type="button" onclick="cambiarCantidad('${esc(item.id)}', 1)" class="btn btn-sm btn-outline-light border-white/20 py-0.5 px-2.5 rounded-lg">+</button>
+              <button type="button" onclick="quitarDelCarrito('${esc(item.id)}')" class="btn btn-sm btn-outline-danger py-0.5 px-2 ms-1 rounded-lg" title="Quitar">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    async function confirmarCompra(event) {
+      event.preventDefault();
+      if (carrito.length === 0) return;
+
+      const btnComprar = document.getElementById('btn-comprar');
+      const textoOriginal = btnComprar.innerHTML;
+      btnComprar.disabled = true;
+      btnComprar.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Procesando...';
+
+      const nombre = document.getElementById('cliente-nombre').value.trim();
+      const telefono = document.getElementById('cliente-telefono').value.trim();
+      const direccion = document.getElementById('cliente-direccion').value.trim();
+      const pago = document.getElementById('cliente-pago').value;
+
+      const totalPrecio = carrito.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+      const resumenItems = carrito.map(i => `<li>${i.cantidad}x ${esc(i.marca)} ${esc(i.modelo)} — <strong class="text-cyan-300">$${(i.precio * i.cantidad).toFixed(2)}</strong></li>`).join('');
+
+      try {
+        await Promise.all(carrito.map(async (item) => {
+          const prodActual = listaProductos.find(p => String(p.id) === String(item.id));
+          if (!prodActual) return;
+
+          const stockActual = obtenerStockProducto(prodActual);
+          const nuevoStock = Math.max(0, stockActual - item.cantidad);
+
+          const res = await fetch(`${API_URL}/productos/${item.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ...prodActual,
+              stock: nuevoStock
+            })
+          });
+
+          if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+          }
+        }));
+
+        document.getElementById('detalle-comprobante').innerHTML = `
+          <p class="m-0"><strong class="text-cyan-300">Cliente:</strong> ${esc(nombre)}</p>
+          <p class="m-0"><strong class="text-cyan-300">Teléfono:</strong> ${esc(telefono)}</p>
+          <p class="m-0"><strong class="text-cyan-300">Dirección:</strong> ${esc(direccion)}</p>
+          <p class="m-0"><strong class="text-cyan-300">Pago:</strong> ${esc(pago)}</p>
+          <hr class="border-white/10 my-2">
+          <p class="font-semibold mb-1 text-fuchsia-300">Dispositivos:</p>
+          <ul class="list-disc ps-5 text-sm space-y-1">${resumenItems}</ul>
+          <div class="p-3 rounded-2xl mt-3 flex justify-between items-center border border-cyan-400/30 bg-cyan-400/10">
+            <span class="font-bold text-white">Total pagado:</span>
+            <span class="text-xl font-extrabold font-display neon-text">$${totalPrecio.toFixed(2)}</span>
+          </div>
+        `;
+
+        const modalCarritoEl = document.getElementById('modalCarrito');
+        const modalCarritoInstance = bootstrap.Modal.getInstance(modalCarritoEl);
+        if (modalCarritoInstance) modalCarritoInstance.hide();
+
+        carrito = [];
+        guardarCarritoLocal();
+        renderizarCarrito();
+        document.getElementById('form-compra').reset();
+
+        await cargarDatosIniciales();
+
+        const modalComprobante = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalComprobante'));
+        modalComprobante.show();
+        mostrarToast('¡Compra confirmada y stock actualizado!', 'success');
+      } catch (error) {
+        console.error('Error al actualizar el stock tras la compra:', error);
+        mostrarToast('Hubo un problema al descontar el stock en MockAPI.', 'error');
+      } finally {
+        btnComprar.disabled = carrito.length === 0;
+        btnComprar.innerHTML = textoOriginal;
+      }
+    }
+  </script>
+</body>
+</html>
